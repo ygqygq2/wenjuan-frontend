@@ -10,9 +10,9 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
-  plugins: ["react", '@typescript-eslint', 'prettier', 'import', 'unused-imports', 'zhlint'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'import', 'unused-imports', 'zhlint'],
   extends: [
     // airbnb 规范
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
@@ -67,7 +67,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       1,
       {
-        devDependencies: ['**/*. test. {ts,js}', '**/*. spec. {ts,js}', './test/**.{ts,js}'],
+        devDependencies: ['**/*.test.{ts,js,tsx}', '**/*.spec.{ts,js,tsx}', './test/**/*.{ts,js,tsx}'],
       },
     ],
     // 模块导入顺序规则
@@ -141,6 +141,6 @@ module.exports = {
     ],
   },
   settings: {
-    extensions: ['. ts', '. d.ts', '. cts', '. mts', '. js', '. cjs', 'mjs', '. json'],
+    extensions: ['.ts', '.d.ts', '.cts', '.mts', '.js', '.cjs', '.mjs', '.json'],
   },
 };
