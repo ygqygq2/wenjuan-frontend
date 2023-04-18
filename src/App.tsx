@@ -1,3 +1,4 @@
+import 'antd/dist/reset.css';
 import { RouterProvider } from 'react-router-dom';
 
 import routerConfig from './router';
