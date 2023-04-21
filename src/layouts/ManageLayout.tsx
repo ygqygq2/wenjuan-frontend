@@ -1,6 +1,7 @@
 import { BarsOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
+import { useRequest } from 'ahooks';
 import { Button, Divider, Space, message } from 'antd';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
@@ -12,17 +13,13 @@ const ManageLayout: FC = () => {
   const nav = useNavigate();
   const { pathname } = useLocation();
 
-  const [loading, setLoading] = useState(false);
-  async function handleCreateClick() {
-    setLoading(true);
-    const data = await createQuestionService();
-    const { id } = data || {};
-    if (id) {
-      nav(`/question/edit/${id}`);
+  const { loading, run: handleCreateClick } = useRequest(createQuestionService, {
+    manual: true,
+    onSuccess(result) {
+      nav(`/question/edit/${result.id}`);
       message.success('创建成功');
-    }
-    setLoading(false);
-  }
+    },
+  });
 
   return (
     <>
