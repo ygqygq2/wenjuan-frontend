@@ -1,21 +1,42 @@
 import { BarsOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
-import { Button, Divider, Space } from 'antd';
-import React, { FC } from 'react';
+import { Button, Divider, Space, message } from 'antd';
+import React, { FC, useState } from 'react';
 
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+
+import { createQuestionService } from '@/services/question';
 
 import styles from './ManageLayout.module.scss';
 
 const ManageLayout: FC = () => {
   const nav = useNavigate();
   const { pathname } = useLocation();
+
+  const [loading, setLoading] = useState(false);
+  async function handleCreateClick() {
+    setLoading(true);
+    const data = await createQuestionService();
+    const { id } = data || {};
+    if (id) {
+      nav(`/question/edit/${id}`);
+      message.success('创建成功');
+    }
+    setLoading(false);
+  }
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.left}>
           <Space direction="vertical">
-            <Button type="primary" size="large" icon={<PlusOutlined></PlusOutlined>}>
-              创建问卷
+            <Button
+              type="primary"
+              size="large"
+              icon={<PlusOutlined></PlusOutlined>}
+              onClick={handleCreateClick}
+              disabled={loading}
+            >
+              新建问卷
             </Button>
             <Divider style={{ borderTop: 'transparent' }}></Divider>
             <Button
