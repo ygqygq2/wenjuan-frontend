@@ -1,63 +1,47 @@
-import { FC, useState } from 'react';
+import { useRequest, useTitle } from 'ahooks';
+import { Spin, Typography } from 'antd';
+import { FC } from 'react';
+
+import ListSearch from '@/components/ListSearch';
+import { getQuestionListService } from '@/services/question';
 
 import QuestionCard from '../../components/QuestionCard';
 
 import styles from './List.module.scss';
 
-const rawQuestionList = [
-  {
-    _id: '1',
-    title: '问卷 1',
-    isPublished: false,
-    isStart: true,
-    answerCount: 100,
-    createdAt: '2021-01-01 12:00:00',
-  },
-  {
-    _id: '2',
-    title: '问卷 2',
-    isPublished: true,
-    isStart: false,
-    answerCount: 3,
-    createdAt: '2021-01-02 12:00:00',
-  },
-  {
-    _id: '3',
-    title: '问卷 3',
-    isPublished: true,
-    isStart: true,
-    answerCount: 40,
-    createdAt: '2021-01-03 12:00:00',
-  },
-  {
-    _id: '4',
-    title: '问卷 4',
-    isPublished: false,
-    isStart: false,
-    answerCount: 20,
-    createdAt: '2021-01-04 12:00:00',
-  },
-];
+const { Title } = Typography;
 
 const List: FC = () => {
+  useTitle('问卷调查 - 我的问卷');
+
+  const { data = {}, loading } = useRequest(getQuestionListService);
   // eslint-disable-next-line unused-imports/no-unused-vars
-  const [questionList, setQuestionList] = useState(rawQuestionList);
+  const { list = [], total = 0 } = data;
   return (
     <>
       <div className={styles.header}>
         <div className={styles.left}>
-          <h3>我的问卷</h3>
+          <Title level={3}>我的问卷</Title>
         </div>
-        <div className={styles.right}>搜索</div>
+        <div className={styles.right}>
+          <ListSearch></ListSearch>
+        </div>
       </div>
       <div className={styles.content}>
-        {questionList.map((q) => {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          const { _id } = q;
-          return <QuestionCard isStar={false} key={_id} {...q} />;
-        })}
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin></Spin>
+          </div>
+        )}
+        {!loading &&
+          list.length > 0 &&
+          list.map((q: any) => {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            const { _id } = q;
+            return <QuestionCard key={_id} {...q} />;
+          })}
       </div>
-      <div className={styles.footer}>List 底部</div>
+      <div className={styles.footer}>Load more... 上划加载更多</div>
     </>
   );
 };
