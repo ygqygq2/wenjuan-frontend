@@ -43,7 +43,7 @@ const List: FC = () => {
         pageSize: LIST_PAGE_SIZE,
         keyword,
       });
-      return { data };
+      return data;
     },
     {
       manual: true,

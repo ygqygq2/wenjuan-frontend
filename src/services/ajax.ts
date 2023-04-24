@@ -1,11 +1,22 @@
 import { message } from 'antd';
 import axios from 'axios';
 
+import { getToken } from '@/utils/user-token';
+
 const instance = axios.create({
   timeout: 10 * 1000,
 });
 
-// 拦截处理 errno 和 msg
+// request 拦截处理 token
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${getToken()}`;
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
+// response 拦截处理 errno 和 msg
 instance.interceptors.response.use((res) => {
   const resData = (res.data || {}) as ResType;
   const { errno, data, msg } = resData;

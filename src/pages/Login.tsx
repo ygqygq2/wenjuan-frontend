@@ -1,9 +1,14 @@
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Space, Typography } from 'antd';
+import { useRequest } from 'ahooks';
+import { Button, Checkbox, Form, Input, Space, Typography, message } from 'antd';
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { REGISTER_PATHNAME } from '../config/constants';
+import { loginService } from '@/services/user';
+
+import { setToken } from '@/utils/user-token';
+
+import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '../config/constants';
 
 import styles from './Login.module.scss';
 
@@ -30,7 +35,7 @@ function getUserInfoFormStorage() {
 }
 
 const Login: FC = () => {
-  // const nav = useNavigate();
+  const nav = useNavigate();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -38,8 +43,26 @@ const Login: FC = () => {
     form.setFieldsValue({ username, password });
   }, []);
 
+  const { run } = useRequest(
+    async (username: string, password: string) => {
+      const data = await loginService(username, password);
+      return data;
+    },
+    {
+      manual: true,
+      onSuccess(result) {
+        const { token = '' } = result;
+        setToken(token); // 存储 token
+        message.success('登录成功');
+        nav(MANAGE_INDEX_PATHNAME);
+      },
+    },
+  );
+
   const onFinish = (values: any) => {
     const { username, password, remember } = values || {};
+
+    run(username, password);
 
     if (remember) {
       rememberUser(username, password);

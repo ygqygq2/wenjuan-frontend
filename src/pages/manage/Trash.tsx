@@ -14,7 +14,7 @@ const { Title } = Typography;
 const { confirm } = Modal;
 
 const Trash: FC = () => {
-  useTitle('小慕问卷 - 回收站');
+  useTitle('问卷调查 - 回收站');
 
   const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true });
   const { list = [], total = 0 } = data;

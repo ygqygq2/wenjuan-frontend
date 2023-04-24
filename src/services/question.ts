@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import { ResDataType } from './ajax';
+import axios, { ResDataType } from './ajax';
 
 type SearchOption = {
   keyword: string;
