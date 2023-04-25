@@ -1,6 +1,8 @@
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
+
+import useLoadUserData from '@/hooks/useLoadUserData';
 
 import Logo from '../components/Logo';
 
@@ -9,6 +11,7 @@ import styles from './MainLayout.module.scss';
 const { Header, Content, Footer } = Layout;
 
 const MainLayout: FC = () => {
+  const { waitingUserData } = useLoadUserData();
   return (
     <>
       <Layout>
@@ -19,7 +22,13 @@ const MainLayout: FC = () => {
           <div className={styles.right}></div>
         </Header>
         <Content className={styles.main}>
-          <Outlet></Outlet>
+          {waitingUserData ? (
+            <div style={{ textAlign: 'center', marginTop: '60px' }}>
+              <Spin></Spin>
+            </div>
+          ) : (
+            <Outlet></Outlet>
+          )}
         </Content>
         <Footer className={styles.footer}>问卷调查 &copy;2023 - present. Created by ygqygq2</Footer>
       </Layout>
