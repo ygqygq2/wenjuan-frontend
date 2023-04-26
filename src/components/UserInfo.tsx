@@ -37,7 +37,7 @@ const UserInfo: FC = () => {
 
   const Login = <Link to={LOGIN_PATHNAME}>登录</Link>;
 
-  return <>{username ? UserInfoEl : Login}</>;
+  return <div>{username ? UserInfoEl : Login}</div>;
 };
 
 export default UserInfo;

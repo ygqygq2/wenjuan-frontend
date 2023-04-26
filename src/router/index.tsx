@@ -1,6 +1,8 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { HOME_PATHNAME, LOGIN_PATHNAME, REGISTER_PATHNAME } from '@/config/constants';
+
 import MainLayout from '../layouts/MainLayout';
 import ManageLayout from '../layouts/ManageLayout';
 import QuestionLayout from '../layouts/QuestionLayout';
@@ -72,3 +74,17 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+
+export function isLoginOrRegister(pathname: string) {
+  if ([LOGIN_PATHNAME, REGISTER_PATHNAME].includes(pathname)) {
+    return true;
+  }
+  return false;
+}
+
+export function isNoNeedUserInfo(pathname: string) {
+  if ([HOME_PATHNAME, LOGIN_PATHNAME, REGISTER_PATHNAME].includes(pathname)) {
+    return true;
+  }
+  return false;
+}

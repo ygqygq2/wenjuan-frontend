@@ -48,7 +48,6 @@ const List: FC = () => {
     {
       manual: true,
       onSuccess(result) {
-        console.log(result);
         const { list: l = [], total: t = 0 } = result;
         setList(list.concat(l));
         setTotal(t);

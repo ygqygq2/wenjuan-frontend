@@ -19,7 +19,7 @@ const Logo: FC = () => {
     if (username) {
       setPathname(MANAGE_INDEX_PATHNAME);
     }
-  });
+  }, [username]);
   return (
     <>
       <div className={styles.container}>
