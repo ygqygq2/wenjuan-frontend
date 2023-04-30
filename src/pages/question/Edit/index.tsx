@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { useLoadQuestionData } from '@/hooks/useLoadQuestionData';
 
 import EditCanvas from './EditCanvas';
+import EditHeader from './EditHeader';
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
 import styles from './index.module.scss';
@@ -12,7 +13,7 @@ const Edit: FC = () => {
 
   return (
     <div className={styles.container}>
-      <div style={{ backgroundColor: '#fff' }}>Header</div>
+      <EditHeader></EditHeader>
       <div className={styles['content-wrapper']}>
         <div className={styles.content}>
           <div className={styles.left}>
