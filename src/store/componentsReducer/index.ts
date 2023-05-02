@@ -11,6 +11,7 @@ export type ComponentInfoType = {
   type: string;
   title: string;
   isHidden?: boolean;
+  isLocked?: boolean;
   props: ComponentPropsType;
 };
 
