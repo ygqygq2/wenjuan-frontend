@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@ant-design/icons': ^5.0.1
   '@reduxjs/toolkit': ^1.9.5
+  '@types/lodash.clonedeep': ^4.5.7
   '@types/node': ^18.15.13
   '@types/react': ^18.0.28
   '@types/react-dom': ^18.0.11
@@ -16,6 +17,7 @@ specifiers:
   classnames: ^2.3.2
   commitizen: ^4.3.0
   cz-git: ^1.6.1
+  deepmerge: ^4.3.1
   eslint: ^8.38.0
   eslint-config-airbnb-base: ^15.0.0
   eslint-config-airbnb-typescript: ^17.0.0
@@ -27,6 +29,7 @@ specifiers:
   eslint-plugin-zhlint: ^2.0.1
   immer: ^9.0.21
   lint-staged: ^13.2.1
+  lodash.clonedeep: ^4.5.0
   nanoid: ^4.0.2
   prettier: ^2.8.7
   react: ^18.2.0
@@ -46,7 +49,9 @@ dependencies:
   antd: 5.4.2_biqbaboplfbrettd7655fr4n2y
   axios: 1.3.6
   classnames: 2.3.2
+  deepmerge: 4.3.1
   immer: 9.0.21
+  lodash.clonedeep: 4.5.0
   nanoid: 4.0.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -55,6 +60,7 @@ dependencies:
   sass: 1.62.0
 
 devDependencies:
+  '@types/lodash.clonedeep': 4.5.7
   '@types/node': 18.15.13
   '@types/react': 18.0.35
   '@types/react-dom': 18.0.11
@@ -987,6 +993,16 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash.clonedeep/4.5.7:
+    resolution: {integrity: sha512-ccNqkPptFIXrpVqUECi60/DFxjNKsfoQxSQsgcBJCX/fuX1wgyQieojkcWH/KpE3xzLoWN/2k+ZeGqIN3paSvw==}
+    dependencies:
+      '@types/lodash': 4.14.194
+    dev: true
+
+  /@types/lodash/4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
     dev: true
 
   /@types/minimist/1.2.2:
@@ -2111,6 +2127,11 @@ packages:
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: true
+
+  /deepmerge/4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /defaults/1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
@@ -3896,6 +3917,10 @@ packages:
     dependencies:
       p-locate: 5.0.0
     dev: true
+
+  /lodash.clonedeep/4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
 
   /lodash.isplainobject/4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}

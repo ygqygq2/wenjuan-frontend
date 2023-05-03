@@ -31,7 +31,7 @@ export const useLoadQuestionData = () => {
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id; // 默认选中第一个组件
     }
-    dispatch(resetComponents({ componentList, selectedId }));
+    dispatch(resetComponents({ componentList, selectedId, copiedComponent: null }));
   }, [data]);
 
   useEffect(() => {
