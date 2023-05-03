@@ -3,9 +3,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import cloneDeep from 'lodash.clonedeep';
 
+import { nanoid } from 'nanoid';
+
 import { ComponentPropsType } from '@/components/QuestionComponents';
 
-import { getNextSelectedId } from './utils';
+import { getNextSelectedId, insertNewComponent } from './utils';
 
 export type ComponentInfoType = {
   fe_id: string;
@@ -43,16 +45,7 @@ export const componentsSlice = createSlice({
     // 添加新组件
     addComponent: produce((draft: ComponentsStateType, action: PayloadAction<ComponentInfoType>) => {
       const newComponent = action.payload;
-      const { selectedId, componentList } = draft;
-      const index = componentList.findIndex((c) => c.fe_id === selectedId);
-      if (index < 0) {
-        // 未选中任何组件
-        draft.componentList.push(newComponent);
-      } else {
-        // 选中了组件，插入到 index 后面
-        draft.componentList.splice(index + 1, 0, newComponent);
-      }
-      draft.selectedId = newComponent.fe_id;
+      insertNewComponent(draft, newComponent);
     }),
     // 修改组件属性
     changeComponentProps: produce(
@@ -118,7 +111,15 @@ export const componentsSlice = createSlice({
       const { selectedId, componentList = [] } = draft;
       const selectedComponent = componentList.find((c) => c.fe_id === selectedId);
       if (selectedComponent === null) return;
-      draft.copiedComponent = cloneDeep(selectedComponent);
+      draft.copiedComponent = cloneDeep(selectedComponent) as ComponentInfoType;
+    }),
+    // 粘贴组件
+    pasteCopiedComponent: produce((draft: ComponentsStateType) => {
+      const { copiedComponent } = draft;
+      if (copiedComponent === null) return;
+      // 把 fe_id 修改了
+      copiedComponent.fe_id = nanoid();
+      insertNewComponent(draft, copiedComponent);
     }),
   },
 });
@@ -132,5 +133,6 @@ export const {
   changeComponentHidden,
   toggleComponentLocked,
   copySelectedComponent,
+  pasteCopiedComponent,
 } = componentsSlice.actions;
 export default componentsSlice.reducer;

@@ -7,6 +7,7 @@ import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import {
   changeComponentHidden,
   copySelectedComponent,
+  pasteCopiedComponent,
   removeSelectedComponent,
   toggleComponentLocked,
 } from '@/store/componentsReducer';
@@ -14,7 +15,7 @@ import {
 const EditToobar: FC = () => {
   const dispatch = useDispatch();
 
-  const { selectedId, selectedComponent } = useGetComponentInfo();
+  const { selectedId, selectedComponent, copiedComponent } = useGetComponentInfo();
   const { isLocked } = selectedComponent || {};
 
   // 删除组件
@@ -38,7 +39,9 @@ const EditToobar: FC = () => {
   }
 
   // 粘贴组件
-  function handlePaste() {}
+  function handlePaste() {
+    dispatch(pasteCopiedComponent());
+  }
 
   return (
     <Space>
@@ -60,7 +63,12 @@ const EditToobar: FC = () => {
         <Button shape="circle" icon={<CopyOutlined></CopyOutlined>} onClick={handleCopy}></Button>
       </Tooltip>
       <Tooltip title="粘贴">
-        <Button shape="circle" icon={<BlockOutlined></BlockOutlined>} onClick={handlePaste}></Button>
+        <Button
+          shape="circle"
+          icon={<BlockOutlined></BlockOutlined>}
+          onClick={handlePaste}
+          disabled={copiedComponent === null}
+        ></Button>
       </Tooltip>
     </Space>
   );

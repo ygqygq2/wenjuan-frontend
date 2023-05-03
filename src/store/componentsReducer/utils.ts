@@ -1,5 +1,11 @@
-import { ComponentInfoType } from '.';
+import { ComponentInfoType, ComponentsStateType } from '.';
 
+/**
+ * 获取选中的组件下一个组件的 id
+ * @param fe_id
+ * @param componentList
+ * @returns
+ */
 export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
   const visibleComponentList = componentList.filter((c) => !c.isHidden);
   const index = visibleComponentList.findIndex((c) => c.fe_id === fe_id);
@@ -18,4 +24,22 @@ export function getNextSelectedId(fe_id: string, componentList: ComponentInfoTyp
     }
   }
   return newSelectedId;
+}
+
+/**
+ * 插入新组件
+ * @param draft - state draft
+ * @param newComponent - 新组件
+ */
+export function insertNewComponent(draft: ComponentsStateType, newComponent: ComponentInfoType) {
+  const { selectedId, componentList } = draft;
+  const index = componentList.findIndex((c) => c.fe_id === selectedId);
+  if (index < 0) {
+    // 未选中任何组件
+    draft.componentList.push(newComponent);
+  } else {
+    // 选中了组件，插入到 index 后面
+    draft.componentList.splice(index + 1, 0, newComponent);
+  }
+  draft.selectedId = newComponent.fe_id;
 }
