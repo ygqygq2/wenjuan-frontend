@@ -110,16 +110,28 @@ export const componentsSlice = createSlice({
     copySelectedComponent: produce((draft: ComponentsStateType) => {
       const { selectedId, componentList = [] } = draft;
       const selectedComponent = componentList.find((c) => c.fe_id === selectedId);
-      if (selectedComponent === null) return;
+      if (selectedComponent == null) return;
       draft.copiedComponent = cloneDeep(selectedComponent) as ComponentInfoType;
     }),
     // 粘贴组件
     pasteCopiedComponent: produce((draft: ComponentsStateType) => {
       const { copiedComponent } = draft;
-      if (copiedComponent === null) return;
+      if (copiedComponent == null) return;
       // 把 fe_id 修改了
       copiedComponent.fe_id = nanoid();
       insertNewComponent(draft, copiedComponent);
+    }),
+    selectPrevComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList = [] } = draft;
+      const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
+      if (selectedIndex <= 0) return; // 未选中组件，或选中的组件是第一个
+      draft.selectedId = componentList[selectedIndex - 1].fe_id;
+    }),
+    selectNextComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList = [] } = draft;
+      const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
+      if (selectedIndex < 0 || selectedIndex >= componentList.length - 1) return; // 未选中组件，或选中的组件是最后一个
+      draft.selectedId = componentList[selectedIndex + 1].fe_id;
     }),
   },
 });
@@ -134,5 +146,7 @@ export const {
   toggleComponentLocked,
   copySelectedComponent,
   pasteCopiedComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions;
 export default componentsSlice.reducer;

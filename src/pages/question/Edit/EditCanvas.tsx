@@ -5,6 +5,7 @@ import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getComponentConfByType } from '@/components/QuestionComponents';
+import { useBindCanvasKeyPress } from '@/hooks/useBindCanvasKeyPress';
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import { ComponentInfoType, changeSelectedId } from '@/store/componentsReducer';
 
@@ -31,6 +32,10 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
     event.stopPropagation(); // 阻止冒泡
     dispatch(changeSelectedId(id));
   }
+
+  // 绑定快捷键
+  useBindCanvasKeyPress();
+
   if (loading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
@@ -38,6 +43,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
       </div>
     );
   }
+
   return (
     <div className={styles.canvas}>
       {componentList
@@ -56,7 +62,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
             [lockedClassName]: isLocked,
           });
           return (
-            <div className={wrapperClassName} onClick={(e) => handleClick(e, fe_id)}>
+            <div className={wrapperClassName} onClick={(e) => handleClick(e as unknown as MouseEvent, fe_id)}>
               <div className={styles.component}>{genComponent(c)}</div>
             </div>
           );

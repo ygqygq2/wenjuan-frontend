@@ -12,7 +12,7 @@ import {
   toggleComponentLocked,
 } from '@/store/componentsReducer';
 
-const EditToobar: FC = () => {
+const EditToolbar: FC = () => {
   const dispatch = useDispatch();
 
   const { selectedId, selectedComponent, copiedComponent } = useGetComponentInfo();
@@ -74,4 +74,4 @@ const EditToobar: FC = () => {
   );
 };
 
-export default EditToobar;
+export default EditToolbar;

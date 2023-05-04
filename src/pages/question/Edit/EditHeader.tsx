@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './EditHeader.module.scss';
-import EditToobar from './EditToobar';
+import EditToolbar from './EditToolbar';
 
 const { Title } = Typography;
 
@@ -23,7 +23,7 @@ const EditHeader: FC = () => {
           </Space>
         </div>
         <div className={styles.main}>
-          <EditToobar></EditToobar>
+          <EditToolbar></EditToolbar>
         </div>
         <div className={styles.right}>
           <Space>
