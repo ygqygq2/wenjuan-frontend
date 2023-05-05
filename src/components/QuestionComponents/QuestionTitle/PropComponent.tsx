@@ -23,6 +23,7 @@ const PropComponent: FC<QuestionTitlePropsType> = (props: QuestionTitlePropsType
 
   return (
     <Form
+      form={form}
       layout="vertical"
       initialValues={{ text, level, isCenter }}
       onValuesChange={handleValuesChange}
