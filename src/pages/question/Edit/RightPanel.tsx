@@ -24,7 +24,7 @@ const RightPanel: FC = () => {
           页面设置
         </span>
       ),
-      chilren: <div>页面设置</div>,
+      children: <div>页面设置</div>,
     },
   ];
   return <Tabs defaultActiveKey="prop" items={tabsItems}></Tabs>;
