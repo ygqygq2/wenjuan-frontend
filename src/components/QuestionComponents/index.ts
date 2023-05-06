@@ -3,6 +3,7 @@ import { FC } from 'react';
 import QuestionInfoConf, { QuestionInfoPropsType } from './QuestionInfo';
 import QuestionInputConf, { QuestionInputPropsType } from './QuestionInput';
 import QuestionParagraphConf, { QuestionParagraphPropsType } from './QuestionParagraph';
+import QuestionRadioConf, { QuestionRadioPropsType } from './QuestionRadio';
 import QuestionTextareaConf, { QuestionTextareaPropsType } from './QuestionTextarea';
 import QuestionTitleConf, { QuestionTitlePropsType } from './QuestionTitle';
 
@@ -11,7 +12,8 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionTitlePropsType &
   QuestionParagraphPropsType &
   QuestionInfoPropsType &
-  QuestionTextareaPropsType;
+  QuestionTextareaPropsType &
+  QuestionRadioPropsType;
 
 // 组件的配置
 export type ComponentConfType = {
@@ -34,6 +36,11 @@ export const componentConfGroup = [
     groupName: '用户输入',
     components: [QuestionInputConf, QuestionTextareaConf],
   },
+  {
+    groupId: 'chooseGroup',
+    groupName: '用户选择',
+    components: [QuestionRadioConf],
+  },
 ];
 
 const componentConfList: ComponentConfType[] = [
@@ -41,6 +48,7 @@ const componentConfList: ComponentConfType[] = [
   QuestionTitleConf,
   QuestionParagraphConf,
   QuestionInfoConf,
+  QuestionRadioConf,
 ];
 
 export function getComponentConfByType(type: string) {
