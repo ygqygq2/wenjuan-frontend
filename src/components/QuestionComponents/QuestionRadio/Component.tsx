@@ -14,6 +14,7 @@ const QuestionRadio: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
       <Radio.Group value={value}>
         <Space direction={isVertical ? 'vertical' : 'horizontal'}>
           {options.map((opt) => {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             const { value, text } = opt;
             return (
               <Radio key={value} value={value}>

@@ -20,7 +20,7 @@ function genComponent(componentInfo: ComponentInfoType) {
   const componentConf = getComponentConfByType(type);
   if (componentConf == null) return null;
   const { Component } = componentConf;
-  return <Component {...props}></Component>;
+  return <Component key={type} {...props}></Component>;
 }
 
 const EditCanvas: FC<PropsType> = ({ loading }) => {
@@ -48,7 +48,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
     <div className={styles.canvas}>
       {componentList
         .filter((c) => !c.isHidden)
-        .map((c) => {
+        .map((c, index) => {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           const { fe_id, isLocked } = c;
 
@@ -62,7 +62,11 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
             [lockedClassName]: isLocked,
           });
           return (
-            <div className={wrapperClassName} onClick={(e) => handleClick(e as unknown as MouseEvent, fe_id)}>
+            <div
+              key={index}
+              className={wrapperClassName}
+              onClick={(e) => handleClick(e as unknown as MouseEvent, fe_id)}
+            >
               <div className={styles.component}>{genComponent(c)}</div>
             </div>
           );

@@ -23,6 +23,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
       newValues.options = newValues.options.filter((opt) => !(opt.text == null));
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const { options = [] } = newValues;
     options.forEach((opt) => {
       if (opt.value) return;
@@ -56,6 +57,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
                         { required: true, message: '请输入选项文字' },
                         {
                           validator: (_, text) => {
+                            // eslint-disable-next-line @typescript-eslint/no-shadow
                             const { options = [] } = form.getFieldsValue();
                             let num = 0;
                             options.forEach((opt: OptionType) => {
@@ -89,6 +91,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
         </Form.List>
       </Form.Item>
       <Form.Item label="默认选中" name="value">
+        {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
         <Select value={value} options={options.map(({ text, value }) => ({ value, label: text || '' }))}></Select>
       </Form.Item>
       <Form.Item valuePropName="checked" name="isVertical">

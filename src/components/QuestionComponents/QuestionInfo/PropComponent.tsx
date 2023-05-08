@@ -9,10 +9,7 @@ const PropComponent: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldsValue({
-      title,
-      desc,
-    });
+    form.setFieldsValue({ title, desc });
   }, [title, desc]);
 
   function handleValuesChange() {
@@ -22,7 +19,13 @@ const PropComponent: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) 
   }
 
   return (
-    <Form layout="vertical" initialValues={{ title, desc }} onValuesChange={handleValuesChange} disabled={disabled}>
+    <Form
+      layout="vertical"
+      initialValues={{ title, desc }}
+      onValuesChange={handleValuesChange}
+      disabled={disabled}
+      form={form}
+    >
       <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入问卷标题' }]}>
         <Input></Input>
       </Form.Item>

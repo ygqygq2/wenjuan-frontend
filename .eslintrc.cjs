@@ -141,6 +141,15 @@ module.exports = {
         },
       },
     ],
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      {
+        selector: 'memberLike',
+        modifiers: ['private'],
+        format: ['camelCase'],
+        leadingUnderscore: 'require',
+      },
+    ],
   },
   settings: {
     extensions: ['.ts', '.d.ts', '.cts', '.mts', '.js', '.cjs', '.mjs', '.json'],

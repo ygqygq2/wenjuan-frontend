@@ -23,6 +23,7 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
       newValues.list = newValues.list.filter((opt) => !(opt.text == null));
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const { list = [] } = newValues;
     list.forEach((opt) => {
       if (opt.value) return;
@@ -62,6 +63,7 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
                         { required: true, message: '请输入选项文字' },
                         {
                           validator: (_, text) => {
+                            // eslint-disable-next-line @typescript-eslint/no-shadow
                             const { list = [] } = form.getFieldsValue();
                             let num = 0;
                             list.forEach((opt: OptionType) => {
