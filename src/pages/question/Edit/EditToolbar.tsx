@@ -5,11 +5,14 @@ import {
   DownOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
+  RedoOutlined,
+  UndoOutlined,
   UpOutlined,
 } from '@ant-design/icons';
 import { Button, Space, Tooltip } from 'antd';
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import {
@@ -24,7 +27,7 @@ import {
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
 
-  const { selectedId, componentList, selectedComponent, copiedComponent } = useGetComponentInfo();
+  const { selectedId, componentList, selectedComponent, copiedComponent, canUndo, canRedo } = useGetComponentInfo();
   const { isLocked } = selectedComponent || {};
   const { length } = componentList;
   const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
@@ -68,6 +71,16 @@ const EditToolbar: FC = () => {
     dispatch(moveComponent({ oldIndex: selectedIndex, newIndex: selectedIndex + 1 }));
   }
 
+  // 撤消
+  function handleUndo() {
+    dispatch(UndoActionCreators.undo());
+  }
+
+  // 重做
+  function handleRedo() {
+    dispatch(UndoActionCreators.redo());
+  }
+
   return (
     <Space>
       <Tooltip title="删除">
@@ -100,6 +113,22 @@ const EditToolbar: FC = () => {
       </Tooltip>
       <Tooltip title="下移">
         <Button shape="circle" icon={<DownOutlined></DownOutlined>} onClick={handleMoveDown} disabled={isLast}></Button>
+      </Tooltip>
+      <Tooltip title="撤消">
+        <Button
+          shape="circle"
+          icon={<UndoOutlined></UndoOutlined>}
+          onClick={handleUndo}
+          disabled={isLast && !canUndo}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="重做">
+        <Button
+          shape="circle"
+          icon={<RedoOutlined></RedoOutlined>}
+          onClick={handleRedo}
+          disabled={isLast && !canRedo}
+        ></Button>
       </Tooltip>
     </Space>
   );

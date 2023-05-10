@@ -39,6 +39,7 @@ specifiers:
   react-dom: ^18.2.0
   react-redux: ^8.0.5
   react-router-dom: ^6.10.0
+  redux-undo: ^1.0.1
   sass: ^1.62.0
   simple-git-hooks: ^2.8.1
   stylelint: ^15.5.0
@@ -63,6 +64,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-redux: 8.0.5_jlpdlnmgz6kfq77dq7ypembf5a
   react-router-dom: 6.10.0_biqbaboplfbrettd7655fr4n2y
+  redux-undo: 1.0.1
   sass: 1.62.0
 
 devDependencies:
@@ -5450,6 +5452,10 @@ packages:
       redux: ^4
     dependencies:
       redux: 4.2.1
+    dev: false
+
+  /redux-undo/1.0.1:
+    resolution: {integrity: sha512-0yFPT+FUgwxCEiS0Mg5T1S4tkgjR8h6sJRY9CW4EMsbJOf1SxO289TbJmlzhRouCHacdDF+powPjrjLHoJYxWQ==}
     dev: false
 
   /redux/4.2.1:

@@ -1,6 +1,7 @@
 import { useKeyPress } from 'ahooks';
 
 import { useDispatch } from 'react-redux';
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 import {
   copySelectedComponent,
@@ -9,6 +10,8 @@ import {
   selectNextComponent,
   selectPrevComponent,
 } from '@/store/componentsReducer';
+
+import { useGetComponentInfo } from './useGetComponentInfo';
 
 // 判断光标区域
 function isActiveElementValid() {
@@ -21,6 +24,8 @@ function isActiveElementValid() {
 
 export function useBindCanvasKeyPress() {
   const dispatch = useDispatch();
+  const { canUndo, canRedo } = useGetComponentInfo();
+  console.log('canRedo', canRedo, 'canUndo', canUndo);
   // 删除组件
   useKeyPress(['backspace', 'delete'], () => {
     if (!isActiveElementValid()) return;
@@ -49,5 +54,23 @@ export function useBindCanvasKeyPress() {
   useKeyPress('downarrow', () => {
     if (!isActiveElementValid()) return;
     dispatch(selectNextComponent());
+  });
+
+  // 撤消
+  useKeyPress(
+    ['ctrl.z', 'meta.z'],
+    () => {
+      if (canUndo) {
+        dispatch(UndoActionCreators.undo());
+      }
+    },
+    { exactMatch: true },
+  );
+
+  // 重做
+  useKeyPress(['ctrl.y', 'meta.y'], () => {
+    if (canRedo) {
+      dispatch(UndoActionCreators.redo());
+    }
   });
 }
