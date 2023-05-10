@@ -14,6 +14,8 @@ import {
 function isActiveElementValid() {
   const { activeElement } = document;
   if (activeElement === document.body) return true;
+  // 引入 dnt-kit 后
+  if (activeElement?.matches('div[role="button"]')) return true;
   return false;
 }
 
