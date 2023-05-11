@@ -25,7 +25,6 @@ function isActiveElementValid() {
 export function useBindCanvasKeyPress() {
   const dispatch = useDispatch();
   const { canUndo, canRedo } = useGetComponentInfo();
-  console.log('canRedo', canRedo, 'canUndo', canUndo);
   // 删除组件
   useKeyPress(['backspace', 'delete'], () => {
     if (!isActiveElementValid()) return;
