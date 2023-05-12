@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useGetPageInfo } from '@/hooks/useGetPageInfo';
 import { useLoadQuestionData } from '@/hooks/useLoadQuestionData';
 
+import ChartStat from './ChartStat';
 import ComponentList from './ComponentList';
+import PageStat from './PageStat';
 import StatHeader from './StatHeader';
 import styles from './index.module.scss';
 

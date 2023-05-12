@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import QuestionCheckboxConf, { QuestionCheckboxPropsType } from './QuestionCheckbox';
+import QuestionCheckboxConf, { QuestionCheckboxPropsType, QuestionCheckboxStatPropsType } from './QuestionCheckbox';
 import QuestionInfoConf, { QuestionInfoPropsType } from './QuestionInfo';
 import QuestionInputConf, { QuestionInputPropsType } from './QuestionInput';
 import QuestionParagraphConf, { QuestionParagraphPropsType } from './QuestionParagraph';
-import QuestionRadioConf, { QuestionRadioPropsType } from './QuestionRadio';
+import QuestionRadioConf, { QuestionRadioPropsType, QuestionRadioStatPropsType } from './QuestionRadio';
 import QuestionTextareaConf, { QuestionTextareaPropsType } from './QuestionTextarea';
 import QuestionTitleConf, { QuestionTitlePropsType } from './QuestionTitle';
 
@@ -17,6 +17,9 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionRadioPropsType &
   QuestionCheckboxPropsType;
 
+// 组件的 stat
+type ComponentStatPropsType = QuestionRadioStatPropsType & QuestionCheckboxStatPropsType;
+
 // 组件的配置
 export type ComponentConfType = {
   title: string;
@@ -24,6 +27,7 @@ export type ComponentConfType = {
   Component: FC<ComponentPropsType>;
   PropComponent: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
+  StatComponent?: FC<ComponentStatPropsType>;
 };
 
 // 组件分组
