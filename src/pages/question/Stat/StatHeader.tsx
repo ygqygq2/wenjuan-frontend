@@ -1,6 +1,6 @@
 import { CopyOutlined, LeftOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { Button, Input, InputRef, Popover, QRCode, Space, Tooltip, Typography, message } from 'antd';
-import React, { FC, useRef } from 'react';
+import React, { FC, useMemo, useRef } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ const StatHeader: FC = () => {
   }
 
   // 生成链接和二维码
-  function genLinkAndQRCodeElem() {
+  const LinkAndQRCodeElem = useMemo(() => {
     if (!isPublished) return null;
 
     const url = `http://localhost:3000/question/${id}`;
@@ -41,7 +41,7 @@ const StatHeader: FC = () => {
     return (
       <Space>
         <Input value={url} style={{ width: '300px' }} ref={urlInputRef}></Input>
-        <Tooltip>
+        <Tooltip title="拷贝链接">
           <Button icon={<CopyOutlined></CopyOutlined>} onClick={handleCopy}></Button>
         </Tooltip>
         <Popover content={QRCodeElem}>
@@ -49,7 +49,7 @@ const StatHeader: FC = () => {
         </Popover>
       </Space>
     );
-  }
+  }, [id, isPublished]);
 
   return (
     <div className={styles['header-wrapper']}>
@@ -62,7 +62,7 @@ const StatHeader: FC = () => {
             <Title>{title}</Title>
           </Space>
         </div>
-        <div className={styles.main}>{genLinkAndQRCodeElem()}</div>
+        <div className={styles.main}>{LinkAndQRCodeElem}</div>
         <div className={styles.right}>
           <Button type="primary" onClick={() => nav(`/question/edit/${id}`)}>
             编辑问卷

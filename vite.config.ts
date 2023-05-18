@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), splitVendorChunkPlugin()],
   server: {
     proxy: {
       '/api': {
@@ -21,5 +21,17 @@ export default defineConfig({
         replacement: resolve(__dirname, 'src'),
       },
     ],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          antd: ['antd'],
+        },
+        // just a hack to get the next path segment of the last node_modules in path
+        // manualChunks: (path) => path.split('/').reverse()[path.split('/').reverse().indexOf('node_modules') - 1],
+      },
+    },
   },
 });
