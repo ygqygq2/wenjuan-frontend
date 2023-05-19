@@ -11,8 +11,9 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
-  plugins: ['react', '@typescript-eslint', 'prettier', 'import', 'unused-imports', 'zhlint'],
+  plugins: ['react', '@typescript-eslint', 'jest', 'prettier', 'import', 'unused-imports', 'zhlint'],
   extends: [
     // airbnb 规范
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
@@ -28,7 +29,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
 
     // 支持 jest
-    // 'plugin:jest/recommended',
+    'plugin:jest/recommended',
     // 使用 prettier 格式化代码
     // https://github.com/prettier/eslint-config-prettier#readme
     'prettier',
@@ -149,6 +150,10 @@ module.exports = {
         format: ['camelCase'],
         leadingUnderscore: 'require',
       },
+    ],
+    'jest/expect-expect': [
+      'error',
+      { assertFunctionNames: ['expect', 'request.*.expect', 'spec.*', '*.step*.spec', '*.cleanup*'] },
     ],
   },
   settings: {

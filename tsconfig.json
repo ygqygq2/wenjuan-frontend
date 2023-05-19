@@ -16,11 +16,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "./jest-setup.ts", "./vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
