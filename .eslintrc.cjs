@@ -36,6 +36,8 @@ module.exports = {
     // 整合 typescript-eslint 与 prettier
     // https://github.com/prettier/eslint-plugin-prettier
     'plugin:prettier/recommended',
+    // storybook
+    'plugin:storybook/recommended',
   ],
   rules: {
     /* ********************************** ES6+ ********************************** */
@@ -69,7 +71,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       1,
       {
-        devDependencies: ['**/*.test.{ts,js,tsx}', '**/*.spec.{ts,js,tsx}', './test/**/*.{ts,js,tsx}'],
+        devDependencies: ['**/*.test.{ts,js,tsx}', '**/*.spec.{ts,js,tsx}', './test/**/*.{ts,js,tsx}', '**/*.stories.{ts,js,tsx}'],
       },
     ],
     // 模块导入顺序规则
