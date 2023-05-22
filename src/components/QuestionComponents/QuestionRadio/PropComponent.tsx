@@ -82,7 +82,12 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
                 );
               })}
               <Form.Item>
-                <Button type="link" onClick={() => add({ text: '', value: '' })} icon={<PlusOutlined></PlusOutlined>}>
+                <Button
+                  type="link"
+                  onClick={() => add({ text: '', value: '' })}
+                  icon={<PlusOutlined></PlusOutlined>}
+                  block
+                >
                   添加选项
                 </Button>
               </Form.Item>

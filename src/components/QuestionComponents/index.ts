@@ -54,6 +54,7 @@ const componentConfList: ComponentConfType[] = [
   QuestionTitleConf,
   QuestionParagraphConf,
   QuestionInfoConf,
+  QuestionTextareaConf,
   QuestionRadioConf,
   QuestionCheckboxConf,
 ];
