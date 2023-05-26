@@ -4,8 +4,8 @@ import axios, { ResDataType } from './ajax';
  * 获取用户信息
  * @returns
  */
-export async function getUserInfoService(): Promise<ResDataType> {
-  const url = '/api/user/info';
+export async function getUserInfoService(id: string): Promise<ResDataType> {
+  const url = `/api/user/${id}`;
   const data = (await axios.get(url)) as ResDataType;
   return data;
 }
@@ -31,7 +31,7 @@ export async function registerService(username: string, password: string, nickna
  * @returns
  */
 export async function loginService(username: string, password: string): Promise<ResDataType> {
-  const url = '/api/user/login';
+  const url = '/api/auth/login';
   const body = { username, password };
   const data = (await axios.post(url, body)) as ResDataType;
   return data;

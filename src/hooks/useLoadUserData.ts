@@ -2,6 +2,8 @@ import { useRequest } from 'ahooks';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useParams } from 'react-router-dom';
+
 import { getUserInfoService } from '@/services/user';
 import { loginReducer } from '@/store/userReducer';
 
@@ -9,6 +11,7 @@ import { useGetUserInfo } from './useGetUserInfo';
 
 function useLoadUserData() {
   const dispatch = useDispatch();
+  const { id = '' } = useParams();
   const [waitingUserData, setWaitingUserData] = useState(true);
 
   const { run } = useRequest(getUserInfoService, {
@@ -31,7 +34,7 @@ function useLoadUserData() {
     if (username) {
       setWaitingUserData(false);
     }
-    run(); // 如果 username 不存在，就获取用户信息
+    run(id); // 如果 username 不存在，就获取用户信息
   }, [username]);
   return { waitingUserData };
 }

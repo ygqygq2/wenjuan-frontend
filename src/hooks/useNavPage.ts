@@ -25,6 +25,7 @@ function useNavPage(waitingUserData: boolean) {
 
     // 未登录
     if (isNoNeedUserInfo(pathname)) {
+      console.log(pathname);
       console.log('不需要登录路由');
     } else {
       nav(LOGIN_PATHNAME);
