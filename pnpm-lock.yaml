@@ -52,6 +52,7 @@ specifiers:
   immer: ^9.0.21
   jest: ^29.5.0
   jest-environment-jsdom: ^29.5.0
+  jwt-decode: ^3.1.2
   lint-staged: ^13.2.1
   lodash.clonedeep: ^4.5.0
   nanoid: ^4.0.2
@@ -83,6 +84,7 @@ dependencies:
   classnames: 2.3.2
   deepmerge: 4.3.1
   immer: 9.0.21
+  jwt-decode: 3.1.2
   lodash.clonedeep: 4.5.0
   nanoid: 4.0.2
   react: 18.2.0
@@ -9644,6 +9646,10 @@ packages:
       array-includes: 3.1.6
       object.assign: 4.1.4
     dev: true
+
+  /jwt-decode/3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
+    dev: false
 
   /kind-of/6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
