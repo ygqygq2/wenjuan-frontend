@@ -19,6 +19,7 @@ function useNavPage(waitingUserData: boolean) {
     if (username) {
       if (isLoginOrRegister(pathname)) {
         nav(MANAGE_INDEX_PATHNAME);
+        nav(0);
       }
       return;
     }

@@ -14,20 +14,20 @@ import styles from './Login.module.scss';
 
 const { Title } = Typography;
 
-const USERNAME_KEY = 'username';
-const PASSWORD_KEY = 'password';
+const USERNAME_KEY = 'USERNAME';
+const PASSWORD_KEY = 'PASSWORD';
 
 function rememberUser(username: string, password: string) {
   localStorage.setItem(USERNAME_KEY, username);
   localStorage.setItem(PASSWORD_KEY, password);
 }
 
-function deleteUserFormStorage() {
+function deleteUserFromStorage() {
   localStorage.removeItem(USERNAME_KEY);
   localStorage.removeItem(PASSWORD_KEY);
 }
 
-function getUserInfoFormStorage() {
+function getUserInfoFromStorage() {
   return {
     username: localStorage.getItem(USERNAME_KEY),
     password: localStorage.getItem(PASSWORD_KEY),
@@ -39,7 +39,7 @@ const Login: FC = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const { username, password } = getUserInfoFormStorage();
+    const { username, password } = getUserInfoFromStorage();
     form.setFieldsValue({ username, password });
   }, []);
 
@@ -54,7 +54,10 @@ const Login: FC = () => {
         const { token = '' } = result;
         setToken(token); // 存储 token
         message.success('登录成功');
+        // 跳转到 MANAGE_INDEX_PATHNAME
+        // 页面跳转不成功，只闪一下
         nav(MANAGE_INDEX_PATHNAME);
+        // nav(0);
       },
     },
   );
@@ -67,7 +70,7 @@ const Login: FC = () => {
     if (remember) {
       rememberUser(username, password);
     } else {
-      deleteUserFormStorage();
+      deleteUserFromStorage();
     }
   };
 
