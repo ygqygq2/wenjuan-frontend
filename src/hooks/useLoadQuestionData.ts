@@ -26,7 +26,7 @@ export const useLoadQuestionData = () => {
 
   useEffect(() => {
     if (!data) return;
-    const { title = '', desc = '', js = '', css = '', componentList = [] } = data;
+    const { title = '', description = '', js = '', css = '', componentList = [] } = data;
     // 获取默认的 selectedId
     let selectedId = '';
     if (componentList.length > 0) {
@@ -35,7 +35,7 @@ export const useLoadQuestionData = () => {
     dispatch(resetComponents({ componentList, selectedId, copiedComponent: null }));
 
     // 把 pageInfo 信息存到 redux 中
-    dispatch(resetPageInfo({ title, desc, js, css }));
+    dispatch(resetPageInfo({ title, description, js, css }));
   }, [data]);
 
   useEffect(() => {

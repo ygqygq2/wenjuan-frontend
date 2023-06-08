@@ -57,7 +57,7 @@ const Login: FC = () => {
         // 跳转到 MANAGE_INDEX_PATHNAME
         // 页面跳转不成功，只闪一下
         nav(MANAGE_INDEX_PATHNAME);
-        // nav(0);
+        nav(0);
       },
     },
   );

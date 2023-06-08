@@ -5,7 +5,7 @@ import { getToken } from '@/utils/user-token';
 import axios, { ResDataType } from './ajax';
 
 type DecodedToken = {
-  user_id: number;
+  sub: number;
   username: string;
   iat: number;
   exp: number;
@@ -23,7 +23,7 @@ export async function getUserInfoService(): Promise<ResDataType> {
     return Promise.reject(new Error('用户未登录'));
   }
   const decodedToken = jwt_decode<DecodedToken>(token);
-  const id = decodedToken.user_id;
+  const id = decodedToken.sub;
   const { username } = decodedToken;
   const url = '/api/user/profile';
   const data = (await axios.get(url, {

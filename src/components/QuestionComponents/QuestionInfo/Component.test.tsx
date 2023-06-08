@@ -10,7 +10,7 @@ test('默认属性', () => {
 });
 
 test('传入属性', () => {
-  render(<Component title="hello" desc="world"></Component>);
+  render(<Component title="hello" description="world"></Component>);
 
   const h = screen.getByText('hello');
   expect(h).toBeInTheDocument();
@@ -20,7 +20,7 @@ test('传入属性', () => {
 });
 
 test('多行文字', () => {
-  render(<Component desc={'a\nb\nc'}></Component>);
+  render(<Component description={'a\nb\nc'}></Component>);
 
   const span = screen.getByText('a');
   expect(span).toBeInTheDocument();

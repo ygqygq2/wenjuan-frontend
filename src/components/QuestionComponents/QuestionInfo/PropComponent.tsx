@@ -5,12 +5,12 @@ import { QuestionInfoPropsType } from './interface';
 
 const { TextArea } = Input;
 const PropComponent: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) => {
-  const { title, desc, onChange, disabled } = props;
+  const { title, description, onChange, disabled } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldsValue({ title, desc });
-  }, [title, desc]);
+    form.setFieldsValue({ title, description });
+  }, [title, description]);
 
   function handleValuesChange() {
     if (onChange) {
@@ -21,7 +21,7 @@ const PropComponent: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) 
   return (
     <Form
       layout="vertical"
-      initialValues={{ title, desc }}
+      initialValues={{ title, description }}
       onValuesChange={handleValuesChange}
       disabled={disabled}
       form={form}
@@ -29,7 +29,7 @@ const PropComponent: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) 
       <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入问卷标题' }]}>
         <Input></Input>
       </Form.Item>
-      <Form.Item label="描述" name="desc">
+      <Form.Item label="描述" name="description">
         <TextArea />
       </Form.Item>
     </Form>

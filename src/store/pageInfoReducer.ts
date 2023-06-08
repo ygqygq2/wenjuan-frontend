@@ -3,13 +3,13 @@ import produce from 'immer';
 
 export type PageInfoType = {
   title: string;
-  desc?: string;
+  description?: string;
   js?: string;
   css?: string;
   isPublished?: boolean;
 };
 
-const INIT_STATE: PageInfoType = { title: '', desc: '', js: '', css: '' };
+const INIT_STATE: PageInfoType = { title: '', description: '', js: '', css: '' };
 
 export const pageInfoSlice = createSlice({
   name: 'pageInfo',

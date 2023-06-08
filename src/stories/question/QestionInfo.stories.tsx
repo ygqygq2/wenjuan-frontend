@@ -18,12 +18,12 @@ Default.args = {};
 export const SetProps = Template.bind({});
 SetProps.args = {
   title: 'hello',
-  desc: 'world',
+  description: 'world',
 };
 
 // 换行
 export const DescBreakLine = Template.bind({});
 DescBreakLine.args = {
   title: 'hello',
-  desc: 'a\n\bc',
+  description: 'a\n\bc',
 };

@@ -1,6 +1,6 @@
 export type QuestionInfoPropsType = {
   title?: string;
-  desc?: string;
+  description?: string;
   disabled?: boolean;
 
   onChange?: (newProps: QuestionInfoPropsType) => void;
@@ -8,5 +8,5 @@ export type QuestionInfoPropsType = {
 
 export const QuestionInfoDefaultProps: QuestionInfoPropsType = {
   title: '问卷标题',
-  desc: '问卷描述',
+  description: '问卷描述',
 };

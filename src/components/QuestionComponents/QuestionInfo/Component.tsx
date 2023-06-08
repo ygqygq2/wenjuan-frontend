@@ -6,9 +6,9 @@ import { QuestionInfoPropsType, QuestionInfoDefaultProps } from './interface';
 const { Title, Paragraph } = Typography;
 
 const QuestionInfo: FC<QuestionInfoPropsType> = (props: QuestionInfoPropsType) => {
-  const { title, desc = '' } = { ...QuestionInfoDefaultProps, ...props };
+  const { title, description = '' } = { ...QuestionInfoDefaultProps, ...props };
 
-  const descTextList = desc.split('\n');
+  const descTextList = description.split('\n');
 
   return (
     <div style={{ textAlign: 'center' }}>

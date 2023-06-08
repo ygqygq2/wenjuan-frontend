@@ -26,7 +26,7 @@ const PageSetting: FC = () => {
       <Form.Item label="问卷标题" name="title" rules={[{ required: true, message: '请输入标题' }]}>
         <Input placeholder="请输入标题"></Input>
       </Form.Item>
-      <Form.Item label="问卷描述" name="desc">
+      <Form.Item label="问卷描述" name="description">
         <TextArea placeholder="问卷描述..."></TextArea>
       </Form.Item>
       <Form.Item label="样式代码" name="css">
