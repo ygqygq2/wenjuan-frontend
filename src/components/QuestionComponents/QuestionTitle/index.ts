@@ -1,6 +1,6 @@
-import PropComponent from '../QuestionInput/PropComponent';
-
 import Component from './Component';
+import PropComponent from './PropComponent';
+
 import { QuestionTitleDefaultProps } from './interface';
 
 export * from './interface';

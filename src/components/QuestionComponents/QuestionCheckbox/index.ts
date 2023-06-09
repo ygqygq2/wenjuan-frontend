@@ -6,7 +6,7 @@ import { QuestionCheckboxDefaultProps } from './interface';
 export * from './interface';
 
 export default {
-  title: '单选',
+  title: '多选',
   type: 'questionCheckbox', // 要和后端统一好
   Component, // 画布显示的组件
   PropComponent, // 修改属性
