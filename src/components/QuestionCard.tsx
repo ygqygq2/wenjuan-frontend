@@ -30,6 +30,9 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
   const nav = useNavigate();
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { _id, title, createdAt, answerCount, isPublished, isStar } = props;
+  const options = { timeZone: 'Asia/Shanghai' };
+  // 将 createdAt 转换成北京时间
+  const createdAtLocal = new Date(createdAt).toLocaleString('zh-CN', options);
 
   // 修改标星
   const [isStarState, setIsStarState] = useState(isStar);
@@ -101,7 +104,8 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
           <Space>
             {isPublished ? <Tag color="processing">已发布</Tag> : <Tag>未发布</Tag>}
             <span>答卷: {answerCount}</span>
-            <span>{createdAt}</span>
+            {/* 使用北京时间 */}
+            <span>{createdAtLocal}</span>
           </Space>
         </div>
       </div>
