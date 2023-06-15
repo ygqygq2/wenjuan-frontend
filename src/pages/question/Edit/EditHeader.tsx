@@ -3,13 +3,14 @@ import { useDebounceEffect, useKeyPress, useRequest } from 'ahooks';
 import { Button, Input, Space, Typography, message } from 'antd';
 import React, { ChangeEvent, FC, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import { useGetPageInfo } from '@/hooks/useGetPageInfo';
 
 import { updateQuestionService } from '@/services/question';
+import { StateType } from '@/store';
 import { changePageTitle } from '@/store/pageInfoReducer';
 
 import styles from './EditHeader.module.scss';
@@ -18,7 +19,9 @@ import EditToolbar from './EditToolbar';
 const { Title } = Typography;
 
 const TitleElem: FC = () => {
-  const { title } = useGetPageInfo();
+  // const {title} = useGetPageInfo();
+  const title = useSelector<StateType, string>((state) => state.pageInfo.title); // Add type assertion to the title variable
+
   const dispatch = useDispatch();
   const [editState, setEditState] = useState(false);
 
