@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import produce from 'immer';
 
 export type PageInfoType = {
   title: string;
@@ -9,7 +8,7 @@ export type PageInfoType = {
   isPublished?: boolean;
 };
 
-const INIT_STATE: PageInfoType = { title: '', description: '', js: '', css: '' };
+const INIT_STATE: PageInfoType = { title: '', description: '', js: '', css: '', isPublished: false };
 
 export const pageInfoSlice = createSlice({
   name: 'pageInfo',
@@ -19,9 +18,9 @@ export const pageInfoSlice = createSlice({
       return action.payload;
     },
     // 修改标题
-    changePageTitle: produce((draft: PageInfoType, action: PayloadAction<string>) => {
-      draft.title = action.payload;
-    }),
+    changePageTitle: (state: PageInfoType, action: PayloadAction<string>) => {
+      state.title = action.payload;
+    },
   },
 });
 

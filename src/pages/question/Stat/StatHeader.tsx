@@ -14,6 +14,7 @@ const StatHeader: FC = () => {
   const nav = useNavigate();
   const { id } = useParams();
   const { title, isPublished } = useGetPageInfo();
+  console.log('🚀 ~ file: StatHeader.tsx:17 ~ isPublished:', isPublished);
 
   // 全选拷贝链接
   const urlInputRef = useRef<InputRef>(null);
@@ -29,7 +30,7 @@ const StatHeader: FC = () => {
   const LinkAndQRCodeElem = useMemo(() => {
     if (!isPublished) return null;
 
-    const url = `http://localhost:3000/question/${id}`;
+    const url = `http://localhost:4000/question/${id}`;
 
     // 生成二维码
     const QRCodeElem = (
