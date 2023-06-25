@@ -6,7 +6,7 @@ import React, { FC, useEffect } from 'react';
 import { OptionType, QuestionCheckboxPropsType } from './interface';
 
 const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPropsType) => {
-  const { title, isVertical, list = [], onChange, disabled } = props;
+  const { title, isVertical, options: list = [], onChange, disabled } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -18,13 +18,13 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
     // 触发 onChange 函数
     const newValues = form.getFieldsValue() as QuestionCheckboxPropsType;
 
-    if (newValues.list) {
+    if (newValues.options) {
       // 需要清除 text undefined 的选项
-      newValues.list = newValues.list.filter((opt) => !(opt.text == null));
+      newValues.options = newValues.options.filter((opt) => !(opt.text == null));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { list = [] } = newValues;
+    const { options: list = [] } = newValues;
     list.forEach((opt) => {
       if (opt.value) return;
       opt.value = nanoid(5);

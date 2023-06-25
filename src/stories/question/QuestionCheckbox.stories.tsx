@@ -16,7 +16,7 @@ Default.args = {};
 export const SetProps = Template.bind({});
 SetProps.args = {
   title: 'hello',
-  list: [
+  options: [
     { value: 'v1', text: 't1', checked: false },
     { value: 'v2', text: 't2', checked: true },
     { value: 'v3', text: 't3', checked: true },

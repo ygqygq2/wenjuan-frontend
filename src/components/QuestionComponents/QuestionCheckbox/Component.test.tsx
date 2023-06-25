@@ -24,7 +24,7 @@ test('传入属性', () => {
     { value: 'v2', text: 't2', checked: true },
     { value: 'v3', text: 't3', checked: true },
   ];
-  render(<Component title="hello" list={list} />);
+  render(<Component title="hello" options={list} />);
 
   const title = screen.getByText('hello');
   expect(title).toBeInTheDocument();

@@ -6,7 +6,7 @@ import { QuestionCheckboxDefaultProps, QuestionCheckboxPropsType } from './inter
 const { Paragraph } = Typography;
 
 const QuestionCheckbox: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPropsType) => {
-  const { title, list = [], isVertical } = { ...QuestionCheckboxDefaultProps, ...props };
+  const { title, options: list = [], isVertical } = { ...QuestionCheckboxDefaultProps, ...props };
 
   return (
     <div>
