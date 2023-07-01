@@ -19,6 +19,10 @@ const ManageLayout: FC = () => {
       nav(`/question/edit/${result.id}`);
       message.success('创建成功');
     },
+    // 失败时触发
+    onError() {
+      message.error('创建失败');
+    },
   });
 
   return (

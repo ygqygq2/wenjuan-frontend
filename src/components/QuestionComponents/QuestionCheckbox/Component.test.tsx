@@ -19,18 +19,18 @@ test('默认属性', () => {
 });
 
 test('传入属性', () => {
-  const list = [
+  const options = [
     { value: 'v1', text: 't1', checked: false },
     { value: 'v2', text: 't2', checked: true },
     { value: 'v3', text: 't3', checked: true },
   ];
-  render(<Component title="hello" options={list} />);
+  render(<Component title="hello" options={options} />);
 
   const title = screen.getByText('hello');
   expect(title).toBeInTheDocument();
 
-  // 遍历 list
-  list.forEach((item) => {
+  // 遍历 options
+  options.forEach((item) => {
     const { value, checked } = item;
     const checkbox = screen.getByDisplayValue(value);
     expect(checkbox).toBeInTheDocument();

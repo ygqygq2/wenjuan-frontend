@@ -1,7 +1,8 @@
 import { useRequest } from 'ahooks';
+import { message } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getQuestionService } from '@/services/question';
 import { resetComponents } from '@/store/componentsReducer';
@@ -10,14 +11,25 @@ import { resetPageInfo } from '@/store/pageInfoReducer';
 export const useLoadQuestionData = () => {
   const { id = '' } = useParams();
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   const { loading, data, error, run } = useRequest(
     // eslint-disable-next-line @typescript-eslint/no-shadow
     async (id: string) => {
-      if (!id) throw new Error('没有问卷 id');
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const data = await getQuestionService(id);
-      return data;
+      try {
+        if (!id) throw new Error('没有问卷 id');
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const data = await getQuestionService(id);
+        return data;
+      } catch (err) {
+        console.error('获取问卷数据失败:', err);
+        // 提示返回上一页
+        message.error('返回上一页');
+        setTimeout(() => {
+          nav(-1);
+        }, 2000);
+        throw err;
+      }
     },
     {
       manual: true,

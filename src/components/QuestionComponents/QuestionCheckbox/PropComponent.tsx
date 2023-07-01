@@ -6,12 +6,12 @@ import React, { FC, useEffect } from 'react';
 import { OptionType, QuestionCheckboxPropsType } from './interface';
 
 const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPropsType) => {
-  const { title, isVertical, options: list = [], onChange, disabled } = props;
+  const { title, isVertical, options = [], onChange, disabled } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldsValue({ title, isVertical, list });
-  }, [title, isVertical, list]);
+    form.setFieldsValue({ title, isVertical, options });
+  }, [title, isVertical, options]);
 
   function handleValuesChange() {
     if (onChange == null) return;
@@ -24,8 +24,8 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
     }
 
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { options: list = [] } = newValues;
-    list.forEach((opt) => {
+    const { options = [] } = newValues;
+    options.forEach((opt) => {
       if (opt.value) return;
       opt.value = nanoid(5);
     });
@@ -36,7 +36,7 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
   return (
     <Form
       layout="vertical"
-      initialValues={{ title, isVertical, list }}
+      initialValues={{ title, isVertical, options }}
       form={form}
       onValuesChange={handleValuesChange}
       disabled={disabled}
@@ -45,7 +45,7 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
         <Input></Input>
       </Form.Item>
       <Form.Item label="选项">
-        <Form.List name="list">
+        <Form.List name="options">
           {(fields, { add, remove }) => (
             <>
               {/* 遍历所有的选项（可删除） */}
@@ -64,9 +64,9 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
                         {
                           validator: (_, text) => {
                             // eslint-disable-next-line @typescript-eslint/no-shadow
-                            const { list = [] } = form.getFieldsValue();
+                            const { options = [] } = form.getFieldsValue();
                             let num = 0;
-                            list.forEach((opt: OptionType) => {
+                            options.forEach((opt: OptionType) => {
                               if (opt.text === text) num++; // 记录 text 相同的个数，预期只有 1 个（自己）
                             });
                             if (num === 1) return Promise.resolve();

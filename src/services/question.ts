@@ -46,6 +46,11 @@ export async function getQuestionListService(opt: Partial<SearchOption> = {}): P
  */
 export async function updateQuestionService(id: string, opt: { [key: string]: any }): Promise<ResDataType> {
   const url = `/api/question/${id}`;
+  // const {title} = opt;
+  // // title 为空时，不允许修改
+  // if (!title) {
+  //   return {errno: 1, msg: '标题不能为空'};
+  // }
   const data = (await axios.patch(url, opt)) as ResDataType;
   return data;
 }
