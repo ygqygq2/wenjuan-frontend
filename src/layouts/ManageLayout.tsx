@@ -17,11 +17,11 @@ const ManageLayout: FC = () => {
     manual: true,
     onSuccess(result) {
       nav(`/question/edit/${result.id}`);
-      message.success('创建成功');
+      message.success('来到创建页面成功');
     },
     // 失败时触发
     onError() {
-      message.error('创建失败');
+      message.error('无法创建问卷，请稍后再试');
     },
   });
 

@@ -8,7 +8,7 @@ import { getQuestionService } from '@/services/question';
 import { resetComponents } from '@/store/componentsReducer';
 import { resetPageInfo } from '@/store/pageInfoReducer';
 
-export const useLoadQuestionData = () => {
+export const useLoadQuestionData = (fromEdit: boolean) => {
   const { id = '' } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -18,9 +18,12 @@ export const useLoadQuestionData = () => {
     async (id: string) => {
       try {
         if (!id) throw new Error('没有问卷 id');
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const data = await getQuestionService(id);
-        return data;
+        if (fromEdit) {
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          const data = await getQuestionService(id);
+          return data;
+        }
+        return {};
       } catch (err) {
         console.error('获取问卷数据失败:', err);
         // 提示返回上一页

@@ -113,7 +113,12 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
       <div className={styles['button-container']}>
         <div className={styles.left}>
           <Space>
-            <Button icon={<EditOutlined />} type="text" size="small" onClick={() => nav(`/question/edit/${_id}`)}>
+            <Button
+              icon={<EditOutlined />}
+              type="text"
+              size="small"
+              onClick={() => nav(`/question/edit/${_id}`, { state: { fromEdit: true } })}
+            >
               编辑问卷
             </Button>
             <Button
