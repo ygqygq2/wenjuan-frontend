@@ -18,7 +18,7 @@ const ComponentProp: FC = () => {
   const componentConf = getComponentConfByType(type);
   if (componentConf == null) return <NoProp></NoProp>;
 
-  function changeProps(newProps: ComponentPropsType) {
+  function changeProps(newProps: ComponentPropsType<any>) {
     if (selectedComponent == null) return;
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { fe_id } = selectedComponent;

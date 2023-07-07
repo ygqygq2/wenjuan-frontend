@@ -18,11 +18,6 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
     // 触发 onChange 函数
     const newValues = form.getFieldsValue() as QuestionRadioPropsType;
 
-    if (newValues.options) {
-      // 需要清除 text undefined 的选项
-      newValues.options = newValues.options.filter((opt) => !(opt.text == null));
-    }
-
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const { options = [] } = newValues;
     options.forEach((opt) => {
@@ -69,7 +64,17 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
                         },
                       ]}
                     >
-                      <Input placeholder="输入选项文字..."></Input>
+                      <Input
+                        placeholder="输入选项文字..."
+                        onBlur={(e) => {
+                          const text = e.target.value;
+                          // 如果输入为空，那么就删除这个选项
+                          if (text === '' || text == null) {
+                            remove(name);
+                          }
+                          return text;
+                        }}
+                      ></Input>
                     </Form.Item>
                     {index > 1 && (
                       <MinusCircleOutlined
@@ -84,7 +89,17 @@ const PropComponent: FC<QuestionRadioPropsType> = (props: QuestionRadioPropsType
               <Form.Item>
                 <Button
                   type="link"
-                  onClick={() => add({ text: '', value: '' })}
+                  onClick={() => {
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    const values = form.getFieldsValue();
+                    const { options = [] } = values;
+                    // 如果存在空的选项，那么就不添加新的选项
+                    if (!options.some((opt: OptionType) => opt.text === '')) {
+                      add({
+                        text: '',
+                      });
+                    }
+                  }}
                   icon={<PlusOutlined></PlusOutlined>}
                   block
                 >

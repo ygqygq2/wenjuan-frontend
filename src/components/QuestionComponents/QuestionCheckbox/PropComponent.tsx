@@ -20,7 +20,7 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
 
     if (newValues.options) {
       // 需要清除 text undefined 的选项
-      newValues.options = newValues.options.filter((opt) => !(opt.text == null));
+      // newValues.options = newValues.options.filter ((opt) => !(opt.text == null || opt.text === ''));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -75,7 +75,17 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
                         },
                       ]}
                     >
-                      <Input placeholder="输入选项文字..." />
+                      <Input
+                        placeholder="输入选项文字..."
+                        onBlur={(e) => {
+                          const text = e.target.value;
+                          // 如果输入为空，那么就删除这个选项
+                          if (text === '' || text == null) {
+                            remove(name);
+                          }
+                          return text;
+                        }}
+                      />
                     </Form.Item>
 
                     {/* 当前选项删除按钮 */}
@@ -88,7 +98,16 @@ const PropComponent: FC<QuestionCheckboxPropsType> = (props: QuestionCheckboxPro
               <Form.Item>
                 <Button
                   type="link"
-                  onClick={() => add({ text: '', value: '', checked: false })}
+                  onClick={() => {
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    const values = form.getFieldsValue();
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    const { options = [] } = values;
+                    // 如果存在空的选项，那么就不添加新的选项
+                    if (!options.some((opt: OptionType) => opt.text === '')) {
+                      add({ text: '', value: '', checked: false });
+                    }
+                  }}
                   icon={<PlusOutlined />}
                   block
                 >

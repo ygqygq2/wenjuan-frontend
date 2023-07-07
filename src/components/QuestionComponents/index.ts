@@ -1,32 +1,26 @@
 import { FC } from 'react';
 
-import QuestionCheckboxConf, { QuestionCheckboxPropsType, QuestionCheckboxStatPropsType } from './QuestionCheckbox';
-import QuestionInfoConf, { QuestionInfoPropsType } from './QuestionInfo';
-import QuestionInputConf, { QuestionInputPropsType } from './QuestionInput';
-import QuestionParagraphConf, { QuestionParagraphPropsType } from './QuestionParagraph';
-import QuestionRadioConf, { QuestionRadioPropsType, QuestionRadioStatPropsType } from './QuestionRadio';
-import QuestionTextareaConf, { QuestionTextareaPropsType } from './QuestionTextarea';
-import QuestionTitleConf, { QuestionTitlePropsType } from './QuestionTitle';
+import QuestionCheckboxConf, { QuestionCheckboxStatPropsType } from './QuestionCheckbox';
+import QuestionInfoConf from './QuestionInfo';
+import QuestionInputConf from './QuestionInput';
+import QuestionParagraphConf from './QuestionParagraph';
+import QuestionRadioConf, { QuestionRadioStatPropsType } from './QuestionRadio';
+import QuestionTextareaConf from './QuestionTextarea';
+import QuestionTitleConf from './QuestionTitle';
 
 // 组件的 prop type
-export type ComponentPropsType = QuestionInputPropsType &
-  QuestionTitlePropsType &
-  QuestionParagraphPropsType &
-  QuestionInfoPropsType &
-  QuestionTextareaPropsType &
-  QuestionRadioPropsType &
-  QuestionCheckboxPropsType;
+export type ComponentPropsType<T> = T;
 
 // 组件的 stat
 type ComponentStatPropsType = QuestionRadioStatPropsType & QuestionCheckboxStatPropsType;
 
-// 组件的配置
-export type ComponentConfType = {
+// 使用泛型定义
+export type ComponentConfType<T> = {
   title: string;
   type: string;
-  Component: FC<ComponentPropsType>;
-  PropComponent: FC<ComponentPropsType>;
-  defaultProps: ComponentPropsType;
+  Component: FC<T>;
+  PropComponent: FC<T>;
+  defaultProps: T;
   StatComponent?: FC<ComponentStatPropsType>;
 };
 
@@ -49,16 +43,16 @@ export const componentConfGroup = [
   },
 ];
 
-const componentConfList: ComponentConfType[] = [
-  QuestionInputConf,
-  QuestionTitleConf,
-  QuestionParagraphConf,
-  QuestionInfoConf,
-  QuestionTextareaConf,
-  QuestionRadioConf,
+const componentConfList: ComponentConfType<any>[] = [
   QuestionCheckboxConf,
+  QuestionInfoConf,
+  QuestionInputConf,
+  QuestionParagraphConf,
+  QuestionRadioConf,
+  QuestionTextareaConf,
+  QuestionTitleConf,
 ];
 
-export function getComponentConfByType(type: string) {
-  return componentConfList.find((c) => c.type === type);
+export function getComponentConfByType<T>(type: string): ComponentConfType<T> | undefined {
+  return componentConfList.find((c) => c.type === type) as ComponentConfType<T> | undefined;
 }
