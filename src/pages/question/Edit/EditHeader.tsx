@@ -4,7 +4,7 @@ import { Button, Input, Space, Typography, message } from 'antd';
 import React, { ChangeEvent, FC, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import { useGetPageInfo } from '@/hooks/useGetPageInfo';
@@ -52,6 +52,10 @@ const SaveButton: FC = () => {
   const { id } = useParams();
   const { componentList = [] } = useGetComponentInfo();
   const pageInfo = useGetPageInfo();
+  const location = useLocation();
+
+  const fromEdit: boolean = location.state && location.state.fromEdit;
+  const [saveCount, setSaveCount] = useState(0);
 
   // 保存 pageInfo componentList
   const { loading, run: save } = useRequest(
@@ -62,17 +66,26 @@ const SaveButton: FC = () => {
     { manual: true },
   );
 
+  const handleSave = () => {
+    if (fromEdit && saveCount === 0) {
+      setSaveCount(saveCount + 1);
+    } else {
+      save();
+    }
+    setSaveCount(saveCount + 1);
+  };
+
   // 快捷键
   useKeyPress(['ctrl.s', 'meta.s'], (event: KeyboardEvent) => {
     // 禁用网页默认保存
     event.preventDefault();
-    if (!loading) save();
+    if (!loading) handleSave();
   });
 
   // 自动保存
   useDebounceEffect(
     () => {
-      save();
+      handleSave();
     },
     [pageInfo, componentList],
     { wait: 1000 },
