@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 
 const Stat: FC = () => {
   const nav = useNavigate();
-  const { loading } = useLoadQuestionData();
+  const { loading } = useLoadQuestionData(true);
   const { title, isPublished } = useGetPageInfo();
 
   // 状态提升 selectedId type
