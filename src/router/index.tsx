@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+// import {createBrowserRouter} from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 
 import { HOME_PATHNAME, LOGIN_PATHNAME, REGISTER_PATHNAME } from '@/config/constants';
 
@@ -17,7 +18,9 @@ import Trash from '../pages/manage/Trash';
 const Edit = lazy(() => import(/* webpackChunkName: "editPage" */ '../pages/question/Edit'));
 const Stat = lazy(() => import(/* webpackChunkName: "statPage" */ '../pages/question/Stat'));
 
-const router = createBrowserRouter([
+// history 模式
+// const router = createBrowserRouter ([
+const router = createHashRouter([
   {
     path: '/',
     element: <MainLayout></MainLayout>,
