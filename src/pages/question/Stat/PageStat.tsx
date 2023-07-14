@@ -33,6 +33,7 @@ const PageStat: FC<PropsType> = (props: PropsType) => {
     {
       refreshDeps: [id, page, pageSize],
       onSuccess(res) {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         const { total, list = [] } = res;
         setTotal(total);
         setList(list);
@@ -40,10 +41,11 @@ const PageStat: FC<PropsType> = (props: PropsType) => {
     },
   );
 
-  const { componentList } = useGetComponentInfo();
+  const { componentList } = useGetComponentInfo<any>();
   const columns = componentList.map((c) => {
-    const { fe_id, title, props = {}, type } = c;
-    const colTitle = props!.title || title;
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { fe_id, title, type, props } = c;
+    const colTitle = props?.title || title;
 
     return {
       // title: colTitle,
@@ -71,7 +73,9 @@ const PageStat: FC<PropsType> = (props: PropsType) => {
           total={total}
           pageSize={pageSize}
           current={page}
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           onChange={(page) => setPage(page)}
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           onShowSizeChange={(page, pageSize) => {
             setPage(page);
             setPageSize(pageSize);

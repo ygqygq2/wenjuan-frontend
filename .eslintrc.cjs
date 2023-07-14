@@ -71,7 +71,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       1,
       {
-        devDependencies: ['**/*.test.{ts,js,tsx}', '**/*.spec.{ts,js,tsx}', './test/**/*.{ts,js,tsx}', '**/*.stories.{ts,js,tsx}'],
+        devDependencies: ['vite.config.ts', '**/*.test.{ts,js,tsx}', '**/*.spec.{ts,js,tsx}', './test/**/*.{ts,js,tsx}', '**/*.stories.{ts,js,tsx}'],
       },
     ],
     // 模块导入顺序规则

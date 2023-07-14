@@ -6,7 +6,7 @@ import { ComponentInfoType, ComponentsStateType } from '.';
  * @param componentList
  * @returns
  */
-export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
+export function getNextSelectedId<T>(fe_id: string, componentList: ComponentInfoType<T>[]) {
   const visibleComponentList = componentList.filter((c) => !c.isHidden);
   const index = visibleComponentList.findIndex((c) => c.fe_id === fe_id);
   if (index < 0) return '';
@@ -31,7 +31,7 @@ export function getNextSelectedId(fe_id: string, componentList: ComponentInfoTyp
  * @param draft - state draft
  * @param newComponent - 新组件
  */
-export function insertNewComponent(state: ComponentsStateType, newComponent: ComponentInfoType) {
+export function insertNewComponent<T>(state: ComponentsStateType<T>, newComponent: ComponentInfoType<T>) {
   const { selectedId, componentList } = state;
   const index = componentList.findIndex((c) => c.fe_id === selectedId);
   if (index < 0) {

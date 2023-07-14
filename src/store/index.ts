@@ -6,9 +6,9 @@ import componentsReducer, { ComponentsStateType } from './componentsReducer';
 import pageInfoReducer, { PageInfoType } from './pageInfoReducer';
 import userReducer, { UserStateType } from './userReducer';
 
-export type StateType = {
+export type StateType<T> = {
   user: UserStateType;
-  components: StateWithHistory<ComponentsStateType>;
+  components: StateWithHistory<ComponentsStateType<T>>;
   pageInfo: PageInfoType;
 };
 

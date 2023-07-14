@@ -14,7 +14,6 @@ const StatHeader: FC = () => {
   const nav = useNavigate();
   const { id } = useParams();
   const { title, isPublished } = useGetPageInfo();
-  console.log('🚀 ~ file: StatHeader.tsx:17 ~ isPublished:', isPublished);
 
   // 全选拷贝链接
   const urlInputRef = useRef<InputRef>(null);

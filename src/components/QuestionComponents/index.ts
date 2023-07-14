@@ -1,15 +1,22 @@
 import { FC } from 'react';
 
-import QuestionCheckboxConf, { QuestionCheckboxStatPropsType } from './QuestionCheckbox';
-import QuestionInfoConf from './QuestionInfo';
-import QuestionInputConf from './QuestionInput';
-import QuestionParagraphConf from './QuestionParagraph';
-import QuestionRadioConf, { QuestionRadioStatPropsType } from './QuestionRadio';
-import QuestionTextareaConf from './QuestionTextarea';
-import QuestionTitleConf from './QuestionTitle';
+import QuestionCheckboxConf, { QuestionCheckboxStatPropsType, QuestionCheckboxPropsType } from './QuestionCheckbox';
+import QuestionInfoConf, { QuestionInfoPropsType } from './QuestionInfo';
+import QuestionInputConf, { QuestionInputPropsType } from './QuestionInput';
+import QuestionParagraphConf, { QuestionParagraphPropsType } from './QuestionParagraph';
+import QuestionRadioConf, { QuestionRadioStatPropsType, QuestionRadioPropsType } from './QuestionRadio';
+import QuestionTextareaConf, { QuestionTextareaPropsType } from './QuestionTextarea';
+import QuestionTitleConf, { QuestionTitlePropsType } from './QuestionTitle';
 
 // 组件的 prop type
-export type ComponentPropsType<T> = T;
+export type ComponentPropsType =
+  | QuestionCheckboxPropsType
+  | QuestionInfoPropsType
+  | QuestionInputPropsType
+  | QuestionParagraphPropsType
+  | QuestionRadioPropsType
+  | QuestionTextareaPropsType
+  | QuestionTitlePropsType;
 
 // 组件的 stat
 type ComponentStatPropsType = QuestionRadioStatPropsType & QuestionCheckboxStatPropsType;
@@ -20,7 +27,7 @@ export type ComponentConfType<T> = {
   type: string;
   Component: FC<T>;
   PropComponent: FC<T>;
-  defaultProps: T;
+  defaultProps: T & { onChange?: (newProps: T) => void }; // 添加 onChange 属性
   StatComponent?: FC<ComponentStatPropsType>;
 };
 

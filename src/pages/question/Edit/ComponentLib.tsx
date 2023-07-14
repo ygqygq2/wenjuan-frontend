@@ -11,7 +11,7 @@ import styles from './ComponentLib.module.scss';
 
 const { Title } = Typography;
 
-function genComponent(c: ComponentConfType) {
+function genComponent<T extends object>(c: ComponentConfType<T>) {
   const { title, type, Component, defaultProps } = c;
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ function genComponent(c: ComponentConfType) {
   return (
     <div key={type} className={styles.wrapper} onClick={handleClick}>
       <div className={styles.component}>
-        <Component />
+        <Component {...(defaultProps as T)} />
       </div>
     </div>
   );

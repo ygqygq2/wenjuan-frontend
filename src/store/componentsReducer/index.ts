@@ -9,22 +9,22 @@ import { ComponentPropsType } from '@/components/QuestionComponents';
 
 import { getNextSelectedId, insertNewComponent } from './utils';
 
-export type ComponentInfoType = {
+export type ComponentInfoType<T> = {
   fe_id: string;
   type: string;
   title: string;
   isHidden?: boolean;
   isLocked?: boolean;
-  props: ComponentPropsType;
+  props: T;
 };
 
-export type ComponentsStateType = {
+export type ComponentsStateType<T> = {
   selectedId: string;
-  componentList: Array<ComponentInfoType>;
-  copiedComponent: ComponentInfoType | null;
+  componentList: Array<ComponentInfoType<T>>;
+  copiedComponent: ComponentInfoType<T> | null;
 };
 
-const INIT_STATE: ComponentsStateType = {
+const INIT_STATE: ComponentsStateType<any> = {
   selectedId: '',
   componentList: [],
   copiedComponent: null,
@@ -35,21 +35,21 @@ export const componentsSlice = createSlice({
   initialState: INIT_STATE,
   reducers: {
     // 重置所有组件
-    resetComponents: (state: ComponentsStateType, action: PayloadAction<ComponentsStateType>) => {
+    resetComponents: <T>(state: ComponentsStateType<T>, action: PayloadAction<ComponentsStateType<T>>) => {
       return action.payload;
     },
     // 修改 selectedId
-    changeSelectedId: (state: ComponentsStateType, action: PayloadAction<string>) => {
+    changeSelectedId: <T>(state: ComponentsStateType<T>, action: PayloadAction<string>) => {
       state.selectedId = action.payload;
     },
     // 添加新组件
-    addComponent: (state: ComponentsStateType, action: PayloadAction<ComponentInfoType>) => {
+    addComponent: <T>(state: ComponentsStateType<T>, action: PayloadAction<ComponentInfoType<T>>) => {
       const newComponent = action.payload;
       insertNewComponent(state, newComponent);
     },
     // 修改组件属性
-    changeComponentProps: (
-      state: ComponentsStateType,
+    changeComponentProps: <T>(
+      state: ComponentsStateType<T>,
       action: PayloadAction<{ fe_id: string; newProps: ComponentPropsType }>,
     ) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -65,7 +65,7 @@ export const componentsSlice = createSlice({
       }
     },
     // 删除选中的组件
-    removeSelectedComponent: (state: ComponentsStateType) => {
+    removeSelectedComponent: <T>(state: ComponentsStateType<T>) => {
       const { componentList = [], selectedId: removedId } = state;
 
       // 重新计算 selectedId
@@ -75,8 +75,8 @@ export const componentsSlice = createSlice({
       componentList.splice(index, 1);
     },
     // 隐藏/显示组件
-    changeComponentHidden: (
-      state: ComponentsStateType,
+    changeComponentHidden: <T>(
+      state: ComponentsStateType<T>,
       action: PayloadAction<{ fe_id: string; isHidden: boolean }>,
     ) => {
       const { componentList = [] } = state;
@@ -100,7 +100,7 @@ export const componentsSlice = createSlice({
       }
     },
     // 锁定/解锁组件
-    toggleComponentLocked: (state: ComponentsStateType, action: PayloadAction<{ fe_id: string }>) => {
+    toggleComponentLocked: <T>(state: ComponentsStateType<T>, action: PayloadAction<{ fe_id: string }>) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       const { fe_id } = action.payload;
       const curComp = state.componentList.find((c) => c.fe_id === fe_id);
@@ -109,34 +109,37 @@ export const componentsSlice = createSlice({
       }
     },
     // 拷贝当前选中的组件
-    copySelectedComponent: (state: ComponentsStateType) => {
+    copySelectedComponent: <T>(state: ComponentsStateType<T>) => {
       const { selectedId, componentList = [] } = state;
       const selectedComponent = componentList.find((c) => c.fe_id === selectedId);
       if (selectedComponent == null) return;
-      state.copiedComponent = cloneDeep(selectedComponent) as ComponentInfoType;
+      state.copiedComponent = cloneDeep(selectedComponent) as ComponentInfoType<T>;
     },
     // 粘贴组件
-    pasteCopiedComponent: (state: ComponentsStateType) => {
+    pasteCopiedComponent: <T>(state: ComponentsStateType<T>) => {
       const { copiedComponent } = state;
       if (copiedComponent == null) return;
       // 把 fe_id 修改了
       copiedComponent.fe_id = nanoid();
       insertNewComponent(state, copiedComponent);
     },
-    selectPrevComponent: (state: ComponentsStateType) => {
+    selectPrevComponent: <T>(state: ComponentsStateType<T>) => {
       const { selectedId, componentList = [] } = state;
       const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
       if (selectedIndex <= 0) return; // 未选中组件，或选中的组件是第一个
       state.selectedId = componentList[selectedIndex - 1].fe_id;
     },
-    selectNextComponent: (state: ComponentsStateType) => {
+    selectNextComponent: <T>(state: ComponentsStateType<T>) => {
       const { selectedId, componentList = [] } = state;
       const selectedIndex = componentList.findIndex((c) => c.fe_id === selectedId);
       if (selectedIndex < 0 || selectedIndex >= componentList.length - 1) return; // 未选中组件，或选中的组件是最后一个
       state.selectedId = componentList[selectedIndex + 1].fe_id;
     },
     // 修改组件标题
-    changeComponentTitle: (state: ComponentsStateType, action: PayloadAction<{ fe_id: string; title: string }>) => {
+    changeComponentTitle: <T>(
+      state: ComponentsStateType<T>,
+      action: PayloadAction<{ fe_id: string; title: string }>,
+    ) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       const { title, fe_id } = action.payload;
       const curComp = state.componentList.find((c) => c.fe_id === fe_id);
@@ -144,7 +147,10 @@ export const componentsSlice = createSlice({
     },
 
     // 移动组件位置
-    moveComponent: (state: ComponentsStateType, action: PayloadAction<{ oldIndex: number; newIndex: number }>) => {
+    moveComponent: <T>(
+      state: ComponentsStateType<T>,
+      action: PayloadAction<{ oldIndex: number; newIndex: number }>,
+    ) => {
       const { componentList: curComponentList } = state;
       const { oldIndex, newIndex } = action.payload;
 

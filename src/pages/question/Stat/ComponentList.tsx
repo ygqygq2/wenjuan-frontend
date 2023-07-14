@@ -12,7 +12,7 @@ type PropsType = {
   setSelectedComponentType: (type: string) => void;
 };
 
-const ComponentList: FC<PropsType> = (props) => {
+const ComponentList: FC<PropsType> = (props: PropsType) => {
   const { selectedComponentId, setSelectedComponentId, setSelectedComponentType } = props;
   const { componentList } = useGetComponentInfo();
 
@@ -47,7 +47,7 @@ const ComponentList: FC<PropsType> = (props) => {
               }}
             >
               <div className={styles.component}>
-                <Component {...props}></Component>
+                <Component {...(props as any)}></Component>
               </div>
             </div>
           );

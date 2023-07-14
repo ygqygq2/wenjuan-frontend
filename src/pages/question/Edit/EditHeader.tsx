@@ -20,7 +20,7 @@ const { Title } = Typography;
 
 const TitleElem: FC = () => {
   // const {title} = useGetPageInfo();
-  const title = useSelector<StateType, string>((state) => state.pageInfo.title); // Add type assertion to the title variable
+  const title = useSelector<StateType<any>, string>((state) => state.pageInfo.title); // Add type assertion to the title variable
 
   const dispatch = useDispatch();
   const [editState, setEditState] = useState(false);

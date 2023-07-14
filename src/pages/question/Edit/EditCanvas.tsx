@@ -17,7 +17,7 @@ type PropsType = {
   loading: boolean;
 };
 
-function genComponent(componentInfo: ComponentInfoType) {
+function genComponent<T>(componentInfo: ComponentInfoType<T>) {
   const { type, props } = componentInfo;
   const componentConf = getComponentConfByType(type);
   if (componentConf == null) return null;
