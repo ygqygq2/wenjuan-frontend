@@ -14,6 +14,9 @@ import styles from './Login.module.scss';
 
 const { Title } = Typography;
 
+const DEFAULT_USERNAME = 'test123';
+const DEFAULT_PASSWORD = '123456';
+
 const USERNAME_KEY = 'USERNAME';
 const PASSWORD_KEY = 'PASSWORD';
 
@@ -37,6 +40,11 @@ function getUserInfoFromStorage() {
 const Login: FC = () => {
   const nav = useNavigate();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    // 设置表单的初始值为默认的演示帐号
+    form.setFieldsValue({ username: DEFAULT_USERNAME, password: DEFAULT_PASSWORD });
+  }, []);
 
   useEffect(() => {
     const { username, password } = getUserInfoFromStorage();

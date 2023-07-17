@@ -24,12 +24,13 @@ type PropsType = {
   isPublished: boolean;
   answerCount: number;
   createdAt: string;
+  onDelete: (id: string) => void;
 };
 
 const QuestionCard: FC<PropsType> = (props: PropsType) => {
   const nav = useNavigate();
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { _id, title, createdAt, answerCount, isPublished, isStar } = props;
+  const { _id, title, createdAt, answerCount, isPublished, isStar, onDelete } = props;
   const options = { timeZone: 'Asia/Shanghai' };
   // 将 createdAt 转换成北京时间
   const createdAtLocal = new Date(createdAt).toLocaleString('zh-CN', options);
@@ -74,6 +75,8 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
       onSuccess() {
         message.success('删除成功');
         setIsDeletedState(true);
+        // 通知父组件删除成功，在列表中去掉已删除数据
+        handleDelete(_id);
       },
     },
   );
@@ -84,6 +87,10 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
       icon: <ExclamationCircleOutlined />,
       onOk: deleteQuestion,
     });
+  }
+
+  function handleDelete(id: string) {
+    onDelete(id);
   }
 
   // 已经删除的问卷，不要再渲染卡片了

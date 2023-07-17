@@ -15,12 +15,21 @@ import styles from './common.module.scss';
 
 const { Title } = Typography;
 
+type PropsType = {
+  _id: string;
+  title: string;
+  isStar: boolean;
+  isPublished: boolean;
+  answerCount: number;
+  createdAt: string;
+};
+
 const List: FC = () => {
   useTitle('问卷调查 - 我的问卷');
 
   const [started, setStarted] = useState(false);
   const [page, setPage] = useState(1);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<PropsType[]>([]);
   const [total, setTotal] = useState(0);
   const haveMoreData = total > list.length;
 
@@ -100,6 +109,11 @@ const List: FC = () => {
     return <span>开始加载下一页</span>;
   }, [started, loading, haveMoreData]);
 
+  // 给子组件调用的用于删除已删除问卷的 list 数据
+  const handleDelete = (_id: string) => {
+    setList(list.filter((item) => item._id !== _id));
+  };
+
   return (
     <>
       <div className={styles.header}>
@@ -115,7 +129,7 @@ const List: FC = () => {
           list.map((q: any) => {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             const { _id } = q;
-            return <QuestionCard key={_id} {...q} />;
+            return <QuestionCard key={_id} {...q} onDelete={handleDelete} />;
           })}
       </div>
       <div className={styles.footer}>
