@@ -40,22 +40,17 @@ jobs:
       - name: Build frontend
         run: pnpm build
 
+      - name: Check GitHub Pages status
+        uses: crazy-max/ghaction-github-status@v3
+        with:
+          pages_threshold: major_outage
+
       - name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
           build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Switch to gh-pages branch
-        run: |
-          git checkout gh-pages
-          git pull origin gh-pages
-
-      - name: Configure Custom Domain
-        run: |
-          echo 'wenjuan.ygqygq2.com' > CNAME
+          fqdn: wenjuan.ygqygq2.com
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
