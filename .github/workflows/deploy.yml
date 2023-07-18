@@ -49,6 +49,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Switch to gh-pages branch
+        run: |
+          git checkout gh-pages
+          git pull origin gh-pages
+
       - name: Configure Custom Domain
         run: |
           echo 'wenjuan.ygqygq2.com' > CNAME
