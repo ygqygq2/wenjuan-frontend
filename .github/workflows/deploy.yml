@@ -48,3 +48,9 @@ jobs:
           build_dir: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Custom Domain
+        run: |
+          echo 'wenjuan.ygqygq2.com' > CNAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
