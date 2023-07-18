@@ -61,7 +61,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
       manual: true,
       onSuccess(result) {
         message.success('复制成功');
-        nav(`/question/edit/${result.id}`); // 跳转到问卷编辑页
+        nav(`/question/edit/${result.id}`, { state: { fetchBackendData: true } }); // 跳转到问卷编辑页
       },
     },
   );
@@ -124,7 +124,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
               icon={<EditOutlined />}
               type="text"
               size="small"
-              onClick={() => nav(`/question/edit/${_id}`, { state: { fromEdit: true } })}
+              onClick={() => nav(`/question/edit/${_id}`, { state: { fetchBackendData: true } })}
             >
               编辑问卷
             </Button>

@@ -54,7 +54,7 @@ const SaveButton: FC = () => {
   const pageInfo = useGetPageInfo();
   const location = useLocation();
 
-  const fromEdit: boolean = location.state && location.state.fromEdit;
+  const fetchBackendData: boolean = location.state && location.state.fetchBackendData;
   const [saveCount, setSaveCount] = useState(0);
 
   // 保存 pageInfo componentList
@@ -67,7 +67,7 @@ const SaveButton: FC = () => {
   );
 
   const handleSave = () => {
-    if (fromEdit && saveCount === 0) {
+    if (fetchBackendData && saveCount === 0) {
       setSaveCount(saveCount + 1);
     } else {
       save();

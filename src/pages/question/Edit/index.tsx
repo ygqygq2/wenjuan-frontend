@@ -19,8 +19,8 @@ import styles from './index.module.scss';
 const Edit: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const fromEdit: boolean = location.state && location.state.fromEdit;
-  const { loading } = useLoadQuestionData(fromEdit);
+  const fetchBackendData: boolean = location.state && location.state.fetchBackendData;
+  const { loading } = useLoadQuestionData(fetchBackendData);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

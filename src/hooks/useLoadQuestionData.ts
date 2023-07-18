@@ -8,7 +8,7 @@ import { getQuestionService } from '@/services/question';
 import { resetComponents } from '@/store/componentsReducer';
 import { resetPageInfo } from '@/store/pageInfoReducer';
 
-export const useLoadQuestionData = (fromEdit: boolean) => {
+export const useLoadQuestionData = (fetchBackendData: boolean) => {
   const { id = '' } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -18,7 +18,7 @@ export const useLoadQuestionData = (fromEdit: boolean) => {
     async (id: string) => {
       try {
         if (!id) throw new Error('没有问卷 id');
-        if (fromEdit) {
+        if (fetchBackendData) {
           // eslint-disable-next-line @typescript-eslint/no-shadow
           const data = await getQuestionService(id);
           return data;
