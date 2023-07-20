@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { registerService } from '@/services/user';
 
+import { encryptPassword } from '@/utils/utils';
+
 import { LOGIN_PATHNAME } from '../config/constants';
 
 import styles from './Register.module.scss';
@@ -17,7 +19,9 @@ const Register: FC = () => {
   const { run } = useRequest(
     async (values: any) => {
       const { username, password, nickname } = values;
-      await registerService(username, password, nickname);
+      // 使用 CryptoJS 对密码进行加密
+      const hashedPassword = encryptPassword(password);
+      await registerService(username, hashedPassword, nickname);
     },
     {
       manual: true,
@@ -63,6 +67,7 @@ const Register: FC = () => {
               dependencies={['password']}
               rules={[
                 { required: true, message: '请输入密码' },
+
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('password') === value) {

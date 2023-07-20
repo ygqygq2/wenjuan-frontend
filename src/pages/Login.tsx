@@ -1,7 +1,6 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { Button, Form, Input, Space, Typography, message } from 'antd';
-import CryptoJS from 'crypto-js';
 import React, { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,6 +11,7 @@ import { setToken } from '@/utils/user-token';
 import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '../config/constants';
 
 import styles from './Login.module.scss';
+import { encryptPassword } from '@/utils/utils';
 
 const { Title } = Typography;
 
@@ -30,8 +30,8 @@ const Login: FC = () => {
   const { run } = useRequest(
     async (username: string, password: string) => {
       // 使用 CryptoJS 对密码进行加密
-      const encryptedPassword = CryptoJS.AES.encrypt(password, import.meta.env.CRYPTO_SECRET).toString();
-      const data = await loginService(username, encryptedPassword);
+      const hashedPassword = encryptPassword(password);
+      const data = await loginService(username, hashedPassword);
       return data;
     },
     {
