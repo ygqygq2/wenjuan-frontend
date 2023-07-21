@@ -8,10 +8,11 @@ import { loginService } from '@/services/user';
 
 import { setToken } from '@/utils/user-token';
 
+import { encryptPassword } from '@/utils/utils';
+
 import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '../config/constants';
 
 import styles from './Login.module.scss';
-import { encryptPassword } from '@/utils/utils';
 
 const { Title } = Typography;
 
@@ -42,7 +43,7 @@ const Login: FC = () => {
         message.success('登录成功');
         // 跳转到 MANAGE_INDEX_PATHNAME
         // 页面跳转不成功，只闪一下
-        nav(MANAGE_INDEX_PATHNAME);
+        nav(MANAGE_INDEX_PATHNAME, { replace: true });
         nav(0);
       },
     },
