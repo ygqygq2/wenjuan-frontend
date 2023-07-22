@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { getToken } from '@/utils/user-token';
 
-console.log(import.meta.env.VITE_API_BASE_URL);
 const instance = axios.create({
   baseURL: import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_BASE_URL : '',
   timeout: 10 * 1000,

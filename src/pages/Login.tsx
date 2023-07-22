@@ -2,7 +2,7 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { Button, Form, Input, Space, Typography, message } from 'antd';
 import React, { FC, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { loginService } from '@/services/user';
 
@@ -20,7 +20,6 @@ const DEFAULT_USERNAME = 'test123';
 const DEFAULT_PASSWORD = '123456';
 
 const Login: FC = () => {
-  const nav = useNavigate();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -42,9 +41,8 @@ const Login: FC = () => {
         setToken(token); // 存储 token
         message.success('登录成功');
         // 跳转到 MANAGE_INDEX_PATHNAME
-        // 页面跳转不成功，只闪一下
-        nav(MANAGE_INDEX_PATHNAME, { replace: true });
-        nav(0);
+        window.location.href = `/#${MANAGE_INDEX_PATHNAME}`; // 跳转页面
+        window.location.reload(); // 刷新页面
       },
     },
   );

@@ -16,17 +16,19 @@ function useNavPage(waitingUserData: boolean) {
     if (waitingUserData) return;
 
     // 已经登录
+    console.log('🚀 ~ file: useNavPage.ts:22 ~ useEffect ~ username:', username);
     if (username) {
       if (isLoginOrRegister(pathname)) {
-        nav(MANAGE_INDEX_PATHNAME);
-        nav(0);
+        window.location.href = `/#${MANAGE_INDEX_PATHNAME}`; // 跳转页面
+        window.location.reload(); // 刷新页面
       }
       return;
     }
 
     // 未登录
-    if (isNoNeedUserInfo(pathname)) {
-      console.log('不需要登录路由');
+    const isMatch = isNoNeedUserInfo(pathname);
+    if (isMatch) {
+      console.log('不需要用户信息');
     } else {
       nav(LOGIN_PATHNAME);
     }

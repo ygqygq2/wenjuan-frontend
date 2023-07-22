@@ -86,6 +86,7 @@ export function isLoginOrRegister(pathname: string) {
   return false;
 }
 
+// 判断是否需要用户信息，不需要用户信息的页面有：首页、登录页、注册页
 export function isNoNeedUserInfo(pathname: string) {
   if ([HOME_PATHNAME, LOGIN_PATHNAME, REGISTER_PATHNAME].includes(pathname)) {
     return true;
