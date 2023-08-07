@@ -16,7 +16,6 @@ function useNavPage(waitingUserData: boolean) {
     if (waitingUserData) return;
 
     // 已经登录
-    console.log('🚀 ~ file: useNavPage.ts:22 ~ useEffect ~ username:', username);
     if (username) {
       if (isLoginOrRegister(pathname)) {
         window.location.href = `/#${MANAGE_INDEX_PATHNAME}`; // 跳转页面

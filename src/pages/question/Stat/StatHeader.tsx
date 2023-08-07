@@ -1,6 +1,8 @@
 import { CopyOutlined, LeftOutlined, QrcodeOutlined } from '@ant-design/icons';
-import { Button, Input, InputRef, Popover, QRCode, Space, Tooltip, Typography, message } from 'antd';
-import React, { FC, useMemo, useRef } from 'react';
+import { Button, Checkbox, Divider, Input, InputRef, Popover, QRCode, Space, Tooltip, Typography, message } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import React, { FC, useMemo, useRef, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -10,10 +12,30 @@ import styles from './StatHeader.module.scss';
 
 const { Title } = Typography;
 
+const CheckboxGroup = Checkbox.Group;
+const plainOptions = ['角色 1', '角色 2', '角色 3'];
+const defaultCheckedList = ['角色 1', '角色 3'];
+
 const StatHeader: FC = () => {
   const nav = useNavigate();
   const { id } = useParams();
   const { title, isPublished } = useGetPageInfo();
+
+  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(defaultCheckedList);
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [checkAll, setCheckAll] = useState(false);
+
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+    setIndeterminate(!!list.length && list.length < plainOptions.length);
+    setCheckAll(list.length === plainOptions.length);
+  };
+
+  const onCheckAllChange = (e: CheckboxChangeEvent) => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
+  };
 
   // 全选拷贝链接
   const urlInputRef = useRef<InputRef>(null);
@@ -64,9 +86,26 @@ const StatHeader: FC = () => {
         </div>
         <div className={styles.main}>{LinkAndQRCodeElem}</div>
         <div className={styles.right}>
-          <Button type="primary" onClick={() => nav(`/question/edit/${id}`)}>
-            编辑问卷
-          </Button>
+          <Space>
+            <Popover
+              content={
+                <div>
+                  <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+                    全选（未选择表示所有人可回答）
+                  </Checkbox>
+                  <Divider />
+                  <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
+                </div>
+              }
+              trigger="click"
+              placement="bottom"
+            >
+              <Button>问卷回答角色设置</Button>
+            </Popover>
+            <Button type="primary" onClick={() => nav(`/question/edit/${id}`)}>
+              编辑问卷
+            </Button>
+          </Space>
         </div>
       </div>
     </div>
