@@ -1,22 +1,30 @@
-import { EditOutlined, LeftOutlined, LoadingOutlined } from '@ant-design/icons';
+import { EditOutlined, LeftOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { useDebounceEffect, useKeyPress, useRequest } from 'ahooks';
-import { Button, Input, Space, Typography, message } from 'antd';
-import React, { ChangeEvent, FC, useState } from 'react';
+import { Button, Checkbox, Divider, Input, Popover, Space, Tooltip, Typography, message } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { useGetAnswerRoles } from '@/hooks/useGetAnswerRoles';
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import { useGetPageInfo } from '@/hooks/useGetPageInfo';
 
 import { updateQuestionService } from '@/services/question';
+import { getRolesService } from '@/services/roles';
 import { StateType } from '@/store';
+import { Role } from '@/store/answerRolesReducer';
 import { changePageTitle } from '@/store/pageInfoReducer';
 
 import styles from './EditHeader.module.scss';
 import EditToolbar from './EditToolbar';
+import {arraysAreEqual} from '@/utils/utils';
 
 const { Title } = Typography;
+
+const CheckboxGroup = Checkbox.Group;
 
 const TitleElem: FC = () => {
   // const {title} = useGetPageInfo();
@@ -48,10 +56,74 @@ const TitleElem: FC = () => {
   );
 };
 
+const RolesButton: FC = () => {
+  const defaultCheckedList = useGetAnswerRoles();
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(defaultCheckedList);
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [checkAll, setCheckAll] = useState(false);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const rolesData = (await getRolesService()) as Role[];
+        setRoles(rolesData);
+        setCheckedList(defaultCheckedList || []);
+        arraysAreEqual(defaultCheckedList, plainOptions) && setCheckAll(true);
+        setIndeterminate(!!defaultCheckedList?.length && defaultCheckedList?.length < plainOptions.length);
+      } catch (error) {
+        console.error('获取角色信息失败:', error);
+      }
+    };
+
+    fetchRoles();
+  }, [defaultCheckedList]);
+
+  // 角色名数组
+  const checkboxOptions = useMemo(() => roles.map((role) => ({ label: role.name, value: role.id })), [roles]);
+  const plainOptions = useMemo(() => roles.map((role) => role.id), [roles]);
+
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+    setIndeterminate(!!list.length && list.length < plainOptions.length);
+    setCheckAll(list.length === plainOptions.length);
+  };
+
+  const onCheckAllChange = (e: CheckboxChangeEvent) => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
+  };
+
+  return (
+    <Popover
+      content={
+        <div>
+          <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+            <Space>
+              全选
+              <Tooltip title="未选择表示所有人可回答">
+                <QuestionCircleOutlined style={{ fontSize: '13px' }} />
+              </Tooltip>
+            </Space>
+          </Checkbox>
+          <Divider />
+          <CheckboxGroup options={checkboxOptions} value={checkedList} onChange={onChange} />
+        </div>
+      }
+      trigger="click"
+      placement="bottom"
+    >
+      <Button>问卷回答角色设置</Button>
+    </Popover>
+  );
+};
+
 const SaveButton: FC = () => {
   const { id } = useParams();
   const { componentList = [] } = useGetComponentInfo();
   const pageInfo = useGetPageInfo();
+  const answerRoles = useGetAnswerRoles();
   const location = useLocation();
 
   const fetchBackendData: boolean = location.state && location.state.fetchBackendData;
@@ -61,7 +133,7 @@ const SaveButton: FC = () => {
   const { loading, run: save } = useRequest(
     async () => {
       if (!id) return;
-      await updateQuestionService(id, { ...pageInfo, componentList });
+      await updateQuestionService(id, { ...pageInfo, componentList, roles: answerRoles });
     },
     { manual: true },
   );
@@ -144,6 +216,7 @@ const EditHeader: FC = () => {
         </div>
         <div className={styles.right}>
           <Space>
+            <RolesButton></RolesButton>
             <SaveButton></SaveButton>
             <PublishButton></PublishButton>
           </Space>

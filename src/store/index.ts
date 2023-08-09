@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import undoable, { StateWithHistory, excludeAction } from 'redux-undo';
 
+import answerRolesReducer, { AnswerRolesType } from './answerRolesReducer';
 import componentsReducer, { ComponentsStateType } from './componentsReducer';
 import pageInfoReducer, { PageInfoType } from './pageInfoReducer';
 import userReducer, { UserStateType } from './userReducer';
@@ -10,6 +11,7 @@ export type StateType<T> = {
   user: UserStateType;
   components: StateWithHistory<ComponentsStateType<T>>;
   pageInfo: PageInfoType;
+  answerRoles: AnswerRolesType;
 };
 
 export default configureStore({
@@ -25,5 +27,6 @@ export default configureStore({
       ]),
     }),
     pageInfo: pageInfoReducer,
+    answerRoles: answerRolesReducer,
   },
 });

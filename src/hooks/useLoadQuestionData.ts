@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { getQuestionService } from '@/services/question';
+import { Role, resetAnswerRoles } from '@/store/answerRolesReducer';
 import { resetComponents } from '@/store/componentsReducer';
 import { resetPageInfo } from '@/store/pageInfoReducer';
 
@@ -41,7 +42,15 @@ export const useLoadQuestionData = (fetchBackendData: boolean) => {
 
   useEffect(() => {
     if (!data) return;
-    const { title = '', description = '', js = '', css = '', componentList = [], isPublished = false } = data;
+    const {
+      title = '',
+      description = '',
+      js = '',
+      css = '',
+      componentList = [],
+      isPublished = false,
+      roles = [],
+    } = data;
     // 获取默认的 selectedId
     let selectedId = '';
     if (componentList.length > 0) {
@@ -51,6 +60,9 @@ export const useLoadQuestionData = (fetchBackendData: boolean) => {
 
     // 把 pageInfo 信息存到 redux 中
     dispatch(resetPageInfo({ title, description, js, css, isPublished }));
+
+    // 把问卷回答角色信息存到 redux 中
+    dispatch(resetAnswerRoles(roles.map((role: Role) => role.id)));
   }, [data]);
 
   useEffect(() => {
