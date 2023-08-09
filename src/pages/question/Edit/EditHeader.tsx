@@ -15,12 +15,11 @@ import { useGetPageInfo } from '@/hooks/useGetPageInfo';
 import { updateQuestionService } from '@/services/question';
 import { getRolesService } from '@/services/roles';
 import { StateType } from '@/store';
-import { Role } from '@/store/answerRolesReducer';
+import { AnswerRolesType, Role, changeAnswerRoles } from '@/store/answerRolesReducer';
 import { changePageTitle } from '@/store/pageInfoReducer';
 
 import styles from './EditHeader.module.scss';
 import EditToolbar from './EditToolbar';
-import {arraysAreEqual} from '@/utils/utils';
 
 const { Title } = Typography;
 
@@ -50,18 +49,23 @@ const TitleElem: FC = () => {
   }
   return (
     <Space>
-      <Title>{title}</Title>;
+      <Title>{title}</Title>
       <Button icon={<EditOutlined></EditOutlined>} type="text" onClick={() => setEditState(true)}></Button>
     </Space>
   );
 };
 
 const RolesButton: FC = () => {
+  const dispatch = useDispatch();
   const defaultCheckedList = useGetAnswerRoles();
   const [roles, setRoles] = useState<Role[]>([]);
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(defaultCheckedList);
-  const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
+
+  // 角色名数组
+  const checkboxOptions = useMemo(() => roles.map((role) => ({ label: role.name, value: role.id })), [roles]);
+  const plainOptions = useMemo(() => roles.map((role) => role.id), [roles]);
+  const checkAll = plainOptions.length === checkedList.length;
+  const indeterminate = checkedList.length > 0 && checkedList.length < plainOptions.length;
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -69,8 +73,6 @@ const RolesButton: FC = () => {
         const rolesData = (await getRolesService()) as Role[];
         setRoles(rolesData);
         setCheckedList(defaultCheckedList || []);
-        arraysAreEqual(defaultCheckedList, plainOptions) && setCheckAll(true);
-        setIndeterminate(!!defaultCheckedList?.length && defaultCheckedList?.length < plainOptions.length);
       } catch (error) {
         console.error('获取角色信息失败:', error);
       }
@@ -79,20 +81,15 @@ const RolesButton: FC = () => {
     fetchRoles();
   }, [defaultCheckedList]);
 
-  // 角色名数组
-  const checkboxOptions = useMemo(() => roles.map((role) => ({ label: role.name, value: role.id })), [roles]);
-  const plainOptions = useMemo(() => roles.map((role) => role.id), [roles]);
-
   const onChange = (list: CheckboxValueType[]) => {
     setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
+    console.log(list);
+    dispatch(changeAnswerRoles(list as AnswerRolesType));
   };
 
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
     setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
+    dispatch(changeAnswerRoles(e.target.checked ? plainOptions : []));
   };
 
   return (
@@ -159,7 +156,7 @@ const SaveButton: FC = () => {
     () => {
       handleSave();
     },
-    [pageInfo, componentList],
+    [pageInfo, componentList, answerRoles],
     { wait: 1000 },
   );
 

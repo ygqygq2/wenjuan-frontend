@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export type Role = {
   id: number;
   name: string;
-}
+};
 export type AnswerRolesType = number[];
 
 const INIT_STATE: AnswerRolesType = [];
@@ -17,7 +17,7 @@ export const answerRolesSlice = createSlice({
     },
     // 修改标题
     changeAnswerRoles: (state: AnswerRolesType, action: PayloadAction<AnswerRolesType>) => {
-      console.log(state);
+      state.splice(0, state.length, ...action.payload);
     },
   },
 });
