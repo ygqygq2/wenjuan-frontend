@@ -5,6 +5,8 @@ import {
   CopyOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  PlayCircleOutlined,
+  PauseOutlined,
 } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { Button, Space, Divider, Tag, Popconfirm, Modal, message } from 'antd';
@@ -35,6 +37,21 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
   // 将 createdAt 转换成北京时间
   const createdAtLocal = new Date(createdAt).toLocaleString('zh-CN', options);
 
+  // 修改发布
+  const [isPublishedState, setIsPublishedState] = useState(isPublished);
+  const { loading: changePublishLoading, run: changePublish } = useRequest(
+    async () => {
+      await updateQuestionService(_id, { isPublished: !isPublishedState });
+    },
+    {
+      manual: true,
+      onSuccess() {
+        setIsPublishedState(!isPublishedState); // 更新 state
+        message.success('已更新');
+      },
+    },
+  );
+
   // 修改标星
   const [isStarState, setIsStarState] = useState(isStar);
   const { loading: changeStarLoading, run: changeStar } = useRequest(
@@ -51,20 +68,13 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
   );
 
   // 复制
-  const { loading: duplicateLoading, run: duplicate } = useRequest(
-    // async () => {
-    //   const data = await duplicateQuestionService(_id)
-    //   return data
-    // },
-    async () => duplicateQuestionService(_id),
-    {
-      manual: true,
-      onSuccess(result) {
-        message.success('复制成功');
-        nav(`/question/edit/${result.id}`, { state: { fetchBackendData: true } }); // 跳转到问卷编辑页
-      },
+  const { loading: duplicateLoading, run: duplicate } = useRequest(async () => duplicateQuestionService(_id), {
+    manual: true,
+    onSuccess(result) {
+      message.success('复制成功');
+      nav(`/question/edit/${result.id}`, { state: { fetchBackendData: true } }); // 跳转到问卷编辑页
     },
-  );
+  });
 
   // 删除
   const [isDeletedState, setIsDeletedState] = useState(false);
@@ -109,7 +119,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
         </div>
         <div className={styles.right}>
           <Space>
-            {isPublished ? <Tag color="processing">已发布</Tag> : <Tag>未发布</Tag>}
+            {isPublishedState ? <Tag color="processing">已发布</Tag> : <Tag>未发布</Tag>}
             <span>答卷: {answerCount}</span>
             {/* 使用北京时间 */}
             <span>{createdAtLocal}</span>
@@ -133,7 +143,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
               type="text"
               size="small"
               onClick={() => nav(`/question/stat/${_id}`)}
-              disabled={!isPublished}
+              disabled={!isPublishedState}
             >
               问卷统计
             </Button>
@@ -141,6 +151,15 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
         </div>
         <div className={styles.right}>
           <Space>
+            <Button
+              type="text"
+              icon={isPublishedState ? <PauseOutlined /> : <PlayCircleOutlined />}
+              size="small"
+              onClick={changePublish}
+              disabled={changePublishLoading}
+            >
+              {isPublishedState ? '停止' : '发布'}
+            </Button>
             <Button type="text" icon={<StarOutlined />} size="small" onClick={changeStar} disabled={changeStarLoading}>
               {isStarState ? '取消标星' : '标星'}
             </Button>
