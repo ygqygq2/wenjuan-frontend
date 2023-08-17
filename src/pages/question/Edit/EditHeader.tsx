@@ -8,6 +8,7 @@ import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { MANAGE_INDEX_PATHNAME } from '@/config/constants';
 import { useGetAnswerRoles } from '@/hooks/useGetAnswerRoles';
 import { useGetComponentInfo } from '@/hooks/useGetComponentInfo';
 import { useGetPageInfo } from '@/hooks/useGetPageInfo';
@@ -131,6 +132,7 @@ const SaveButton: FC = () => {
     async () => {
       if (!id) return;
       await updateQuestionService(id, { ...pageInfo, componentList, roles: answerRoles });
+      console.log('🚀 ~ file: EditHeader.tsx:134 ~ pageInfo:', pageInfo);
     },
     { manual: true },
   );
@@ -202,8 +204,8 @@ const EditHeader: FC = () => {
       <div className={styles.header}>
         <div className={styles.left}>
           <Space>
-            <Button type="link" icon={<LeftOutlined></LeftOutlined>} onClick={() => nav(-1)}>
-              返回
+            <Button type="link" icon={<LeftOutlined></LeftOutlined>} onClick={() => nav(MANAGE_INDEX_PATHNAME)}>
+              返回列表
             </Button>
             <TitleElem></TitleElem>
           </Space>

@@ -72,7 +72,7 @@ const StatHeader: FC = () => {
         <div className={styles.main}>{LinkAndQRCodeElem}</div>
         <div className={styles.right}>
           <Space>
-            <Button type="primary" onClick={() => nav(`/question/edit/${id}`)}>
+            <Button type="primary" onClick={() => nav(`/question/edit/${id}`, { state: { fetchBackendData: true } })}>
               编辑问卷
             </Button>
           </Space>
