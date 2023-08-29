@@ -14,6 +14,8 @@ export type StateType<T> = {
   answerRoles: AnswerRolesType;
 };
 
+export type { UserStateType };
+
 export default configureStore({
   reducer: {
     user: userReducer,

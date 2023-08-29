@@ -1,11 +1,34 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { getUserInfoService } from '@/services/user';
 
 export type UserStateType = {
   username: string;
   nickname: string;
+  waitingUserData: boolean;
+  isLogin: boolean;
 };
 
-const INIT_STATE: UserStateType = { username: '', nickname: '' };
+const INIT_STATE: UserStateType = { username: '', nickname: '', waitingUserData: false, isLogin: false };
+
+export const fetchUserData = createAsyncThunk('user/fetchUserData', async (): Promise<UserStateType> => {
+  const result = await getUserInfoService();
+  const { username } = result;
+  if (username) {
+    const nickname = result?.profile?.nickname || username;
+    return {
+      username,
+      nickname,
+      waitingUserData: false,
+      isLogin: true,
+    };
+  }
+  return {
+    ...INIT_STATE,
+    waitingUserData: false,
+    isLogin: false,
+  };
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -15,6 +38,11 @@ export const userSlice = createSlice({
       return action.payload;
     },
     logoutReducer: () => INIT_STATE,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUserData.fulfilled, (state, action) => {
+      return { ...state, ...action.payload };
+    });
   },
 });
 

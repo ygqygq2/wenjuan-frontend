@@ -14,8 +14,8 @@ import styles from './MainLayout.module.scss';
 const { Header, Content, Footer } = Layout;
 
 const MainLayout: FC = () => {
-  const { waitingUserData } = useLoadUserData();
-  useNavPage(waitingUserData);
+  const userInfo = useLoadUserData();
+  useNavPage(userInfo);
 
   return (
     <>
@@ -29,7 +29,7 @@ const MainLayout: FC = () => {
           </div>
         </Header>
         <Content className={styles.main}>
-          {waitingUserData ? (
+          {userInfo.waitingUserData ? (
             <div style={{ textAlign: 'center', marginTop: '60px' }}>
               <Spin></Spin>
             </div>

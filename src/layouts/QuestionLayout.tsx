@@ -6,13 +6,13 @@ import useLoadUserData from '@/hooks/useLoadUserData';
 import useNavPage from '@/hooks/useNavPage';
 
 const QuestionLayout: FC = () => {
-  const { waitingUserData } = useLoadUserData();
-  useNavPage(waitingUserData);
+  const userInfo = useLoadUserData();
+  useNavPage(userInfo);
 
   return (
     <>
       <div style={{ height: '100vh' }}>
-        {waitingUserData ? (
+        {userInfo.waitingUserData ? (
           <div style={{ textAlign: 'center', marginTop: '60px' }}>
             <Spin></Spin>
           </div>

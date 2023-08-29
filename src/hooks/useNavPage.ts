@@ -5,21 +5,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_PATHNAME, MANAGE_INDEX_PATHNAME } from '@/config/constants';
 import { isLoginOrRegister, isNoNeedUserInfo } from '@/router';
 
-import { useGetUserInfo } from './useGetUserInfo';
+import { UserStateType } from '@/store';
 
-function useNavPage(waitingUserData: boolean) {
-  const { username } = useGetUserInfo();
+function useNavPage(userInfo: UserStateType) {
   const { pathname } = useLocation();
   const nav = useNavigate();
 
   useEffect(() => {
-    if (waitingUserData) return;
+    if (userInfo.waitingUserData && !userInfo.isLogin) return;
 
     // 已经登录
-    if (username) {
+    if (userInfo.isLogin) {
       if (isLoginOrRegister(pathname)) {
-        window.location.href = `/#${MANAGE_INDEX_PATHNAME}`; // 跳转页面
-        window.location.reload(); // 刷新页面
+        nav(MANAGE_INDEX_PATHNAME);
+        return;
       }
       return;
     }
@@ -27,11 +26,11 @@ function useNavPage(waitingUserData: boolean) {
     // 未登录
     const isMatch = isNoNeedUserInfo(pathname);
     if (isMatch) {
-      console.log('不需要用户信息');
+      // console.log ('不需要用户信息');
     } else {
       nav(LOGIN_PATHNAME);
     }
-  }, [waitingUserData, username, pathname]);
+  }, [userInfo, pathname, nav]);
 }
 
 export default useNavPage;

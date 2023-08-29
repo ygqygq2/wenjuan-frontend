@@ -2,9 +2,11 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { Button, Form, Input, Space, Typography, message } from 'antd';
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { loginService } from '@/services/user';
+import { fetchUserData } from '@/store/userReducer';
 
 import { setToken } from '@/utils/user-token';
 
@@ -20,6 +22,8 @@ const DEFAULT_USERNAME = 'test123';
 const DEFAULT_PASSWORD = '123456';
 
 const Login: FC = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -40,9 +44,7 @@ const Login: FC = () => {
         const { token = '' } = result;
         setToken(token); // 存储 token
         message.success('登录成功');
-        // 跳转到 MANAGE_INDEX_PATHNAME
-        window.location.href = `/#${MANAGE_INDEX_PATHNAME}`; // 跳转页面
-        window.location.reload(); // 刷新页面
+        dispatch(fetchUserData());
       },
     },
   );
