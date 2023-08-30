@@ -29,7 +29,7 @@ const MainLayout: FC = () => {
           </div>
         </Header>
         <Content className={styles.main}>
-          {userInfo.waitingUserData ? (
+          {userInfo.waitingUserData && userInfo.isLogin ? (
             <div style={{ textAlign: 'center', marginTop: '60px' }}>
               <Spin></Spin>
             </div>

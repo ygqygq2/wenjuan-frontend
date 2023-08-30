@@ -12,7 +12,7 @@ const QuestionLayout: FC = () => {
   return (
     <>
       <div style={{ height: '100vh' }}>
-        {userInfo.waitingUserData ? (
+        {userInfo.waitingUserData && userInfo.isLogin ? (
           <div style={{ textAlign: 'center', marginTop: '60px' }}>
             <Spin></Spin>
           </div>
