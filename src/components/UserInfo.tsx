@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useGetUserInfo } from '@/hooks/useGetUserInfo';
 import useNavPage from '@/hooks/useNavPage';
+import { AppDispatch } from '@/store';
 import { fetchUserData, logoutReducer } from '@/store/userReducer';
 import { removeToken } from '@/utils/user-token';
 
@@ -13,7 +14,7 @@ import { LOGIN_PATHNAME } from '../config/constants';
 
 const UserInfo: FC = () => {
   const nav = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const getData = async () => {

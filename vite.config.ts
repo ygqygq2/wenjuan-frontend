@@ -27,12 +27,12 @@ export default defineConfig({
     // manifest: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          antd: ['antd'],
-        },
-        // just a hack to get the next path segment of the last node_modules in path
-        // manualChunks: (path) => path.split ('/').reverse()[path.split ('/').reverse().indexOf ('node_modules') - 1],
+        //   manualChunks: {
+        //     react: ['react', 'react-dom', 'react-router-dom'],
+        //     antd: ['antd'],
+        //   },
+        //   // just a hack to get the next path segment of the last node_modules in path
+        //   // manualChunks: (path) => path.split ('/').reverse()[path.split ('/').reverse().indexOf ('node_modules') - 1],
       },
     },
   },

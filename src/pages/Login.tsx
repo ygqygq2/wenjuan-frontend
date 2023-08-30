@@ -3,16 +3,17 @@ import { useRequest } from 'ahooks';
 import { Button, Form, Input, Space, Typography, message } from 'antd';
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { loginService } from '@/services/user';
+import { AppDispatch } from '@/store';
 import { fetchUserData } from '@/store/userReducer';
 
 import { setToken } from '@/utils/user-token';
 
 import { encryptPassword } from '@/utils/utils';
 
-import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '../config/constants';
+import { REGISTER_PATHNAME } from '../config/constants';
 
 import styles from './Login.module.scss';
 
@@ -22,8 +23,7 @@ const DEFAULT_USERNAME = 'test123';
 const DEFAULT_PASSWORD = '123456';
 
 const Login: FC = () => {
-  const dispatch = useDispatch();
-  const nav = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [form] = Form.useForm();
 
   useEffect(() => {

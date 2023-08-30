@@ -16,7 +16,7 @@ export type StateType<T> = {
 
 export type { UserStateType };
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     user: userReducer,
     components: undoable(componentsReducer, {
@@ -32,3 +32,7 @@ export default configureStore({
     answerRoles: answerRolesReducer,
   },
 });
+
+export default store;
+
+export type AppDispatch = typeof store.dispatch;

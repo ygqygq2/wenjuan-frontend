@@ -11,7 +11,7 @@ export type UserStateType = {
 
 const INIT_STATE: UserStateType = { username: '', nickname: '', waitingUserData: false, isLogin: false };
 
-export const fetchUserData = createAsyncThunk('user/fetchUserData', async (): Promise<UserStateType> => {
+export const fetchUserData = createAsyncThunk('user/fetchUserData', async () => {
   const result = await getUserInfoService();
   const { username } = result;
   if (username) {
