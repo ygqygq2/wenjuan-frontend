@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { getUserInfoService } from '@/services/user';
+import { getToken, isTokenExpired } from '@/utils/user-token';
 
 export type UserStateType = {
   username: string;
@@ -30,9 +31,19 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async () => 
   };
 });
 
+// 检查 localStorage 中的 JWT 令牌
+const token = getToken();
+const isTokenValid = !isTokenExpired(token);
+
+// 根据 JWT 令牌的存在与否设置初始状态
+const initialState = {
+  ...INIT_STATE,
+  isLogin: isTokenValid,
+};
+
 export const userSlice = createSlice({
   name: 'user',
-  initialState: INIT_STATE,
+  initialState,
   reducers: {
     loginReducer: (state: UserStateType, action: PayloadAction<UserStateType>) => {
       return action.payload;

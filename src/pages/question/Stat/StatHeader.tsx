@@ -36,7 +36,8 @@ const StatHeader: FC = () => {
   const LinkAndQRCodeElem = useMemo(() => {
     if (!isPublished) return null;
 
-    const url = `http://localhost:4000/question/${id}`;
+    const baseUrl = import.meta.env.VITE_CLIENT_BASE_URL;
+    const url = `${baseUrl}/question/${id}`;
 
     // 生成二维码
     const QRCodeElem = (

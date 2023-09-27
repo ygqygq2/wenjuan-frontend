@@ -4,13 +4,6 @@ import { getToken } from '@/utils/user-token';
 
 import axios, { ResDataType } from './ajax';
 
-type DecodedToken = {
-  sub: number;
-  username: string;
-  iat: number;
-  exp: number;
-};
-
 /**
  * 获取用户信息
  * @returns
